@@ -1,23 +1,14 @@
 package ru.nsu.shatalov.timetable.generator;
 
+import java.util.List;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.enums.RoomType;
-import ru.nsu.shatalov.timetable.model.enums.SubjectType;
 
 public class TimetableGenerator {
 
-    public static void main(String[] args) {
-
-        // Problem parameters
-        Subject[] subjects = {
-                new Subject("Math", RoomType.Lecture, SubjectType.Lecture),
-                new Subject("Math", RoomType.General, SubjectType.Seminar),
-                new Subject("Computer Science", RoomType.Lecture, SubjectType.Lecture),
-                new Subject("Bioinformatics", RoomType.Lecture, SubjectType.Lecture),
-        };
-        int numberOfCourses = subjects.length;
+    public void generate(List<Subject> subjects) {
+        int numberOfCourses = subjects.size();
         int numberOfRooms = 3;
         int numberOfTimeSlots = 5;
         int[] courseCapacities = {50, 20, 60, 40};
@@ -58,7 +49,7 @@ public class TimetableGenerator {
         // Solve and display
         if (model.getSolver().solve()) {
             for (int i = 0; i < numberOfCourses; i++) {
-                System.out.println("Subject " + subjects[i].getName() + " -> Room: "
+                System.out.println("Subject " + subjects.get(i).getName() + " -> Room: "
                         + timetable[i][0].getValue() + ", Time Slot: "
                         + timetable[i][1].getValue());
             }
