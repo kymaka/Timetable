@@ -3,14 +3,17 @@ package ru.nsu.shatalov.timetable.generator;
 import java.util.List;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
+import ru.nsu.shatalov.timetable.model.constraint.Room;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.enums.RoomType;
 
 public class TimetableGenerator {
 
-    public void generate(List<Subject> subjects) {
+    public void generate(List<Subject> subjects, List<Room> rooms) {
         int numberOfCourses = subjects.size();
-        int numberOfRooms = 3;
+        int numberOfRooms = rooms.size();
         int numberOfTimeSlots = 5;
+        
         int[] courseCapacities = {50, 20, 60, 40};
         int[] roomNumbers = {0, 1, 2};
         int[] roomCapacities = {30, 40, 60};

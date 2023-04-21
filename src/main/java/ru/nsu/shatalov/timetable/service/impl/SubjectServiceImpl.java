@@ -13,8 +13,8 @@ public class SubjectServiceImpl implements SubjectService {
         this.subjectRepository = repository;
     }
     @Override
-    public Subject addSubject(Subject subject) {
-        return subjectRepository.save(subject);
+    public void addSubject(Subject subject) {
+        subjectRepository.save(subject);
     }
 
     @Override

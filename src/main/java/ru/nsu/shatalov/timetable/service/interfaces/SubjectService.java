@@ -4,7 +4,7 @@ import java.util.List;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
 
 public interface SubjectService {
-    Subject addSubject(Subject subject);
+    void addSubject(Subject subject);
 
     Subject getSubjectBy(int id);
 

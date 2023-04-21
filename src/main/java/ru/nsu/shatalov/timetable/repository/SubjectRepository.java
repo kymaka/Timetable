@@ -11,9 +11,8 @@ public class SubjectRepository {
         this.dataStore = dataStore;
     }
 
-    public Subject save(Subject subject) {
+    public void save(Subject subject) {
         dataStore.addSubject(subject);
-        return subject;
     }
 
     public List<Subject> getAllSubjects() {
