@@ -1,11 +1,11 @@
 package ru.nsu.shatalov.timetable.generator;
 
-import java.util.List;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
 import ru.nsu.shatalov.timetable.model.constraint.Room;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.enums.RoomType;
+
+import java.util.List;
 
 public class TimetableGenerator {
 
@@ -15,8 +15,15 @@ public class TimetableGenerator {
         int numberOfTimeSlots = 5;
         
         int[] courseCapacities = {50, 20, 60, 40};
-        int[] roomNumbers = {0, 1, 2};
-        int[] roomCapacities = {30, 40, 60};
+        int[] courseRoomTypes = {3, 1, 2, 3};
+        int[] roomNumbers = new int[numberOfRooms];
+        int[] roomCapacities = new int[numberOfRooms];
+        int[] roomTypes = new int[numberOfRooms];
+        for (int i = 0; i < numberOfRooms; i++) {
+            roomNumbers[i] = i;
+            roomCapacities[i] = rooms.get(i).getType().getCapacity();
+            roomTypes[i] = rooms.get(i).getType().toInt();
+        }
 
         // Model
         Model model = new Model("University Timetable");
@@ -44,6 +51,12 @@ public class TimetableGenerator {
             model.arithm(timetable[i][0], "<", numberOfRooms).post();
             model.arithm(timetable[i][1], "<", numberOfTimeSlots).post();
 
+            // Checking for correct room type.
+            IntVar roomTypeVar = model.intVar(roomTypes);
+            model.element(roomTypeVar, roomTypes, timetable[i][0]).post();
+            model.arithm(roomTypeVar, "=",courseRoomTypes[i]).post();
+
+            // Checking for right room capacity.
             IntVar roomCapacityVar = model.intVar(roomCapacities);
             model.element(roomCapacityVar, roomCapacities, timetable[i][0]).post();
             model.arithm(roomCapacityVar, ">=", courseCapacities[i]).post();
@@ -53,7 +66,7 @@ public class TimetableGenerator {
         if (model.getSolver().solve()) {
             for (int i = 0; i < numberOfCourses; i++) {
                 System.out.println("Subject " + subjects.get(i).getName() + " -> Room: "
-                        + timetable[i][0].getValue() + ", Time Slot: "
+                        + rooms.get(timetable[i][0].getValue()).getNumber() + ", Time Slot: "
                         + timetable[i][1].getValue());
             }
         } else {
