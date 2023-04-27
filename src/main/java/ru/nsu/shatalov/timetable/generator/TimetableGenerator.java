@@ -6,10 +6,11 @@ import ru.nsu.shatalov.timetable.model.constraint.Room;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
 
 import java.util.List;
+import ru.nsu.shatalov.timetable.model.constraint.Teacher;
 
 public class TimetableGenerator {
 
-    public void generate(List<Subject> subjects, List<Room> rooms) {
+    public void generate(List<Subject> subjects, List<Room> rooms, List<Teacher> teachers) {
         int numberOfCourses = subjects.size();
         int numberOfRooms = rooms.size();
         int numberOfTimeSlots = 5;
