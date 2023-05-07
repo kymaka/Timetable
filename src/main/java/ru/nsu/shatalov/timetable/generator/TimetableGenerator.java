@@ -14,7 +14,7 @@ public class TimetableGenerator {
     public void generate(List<Subject> subjects, List<Room> rooms, List<Teacher> teachers) {
         int numberOfCourses = subjects.size();
         int numberOfRooms = rooms.size();
-        int numberOfTimeSlots = 2;
+        int numberOfTimeSlots = 3;
 
         int[] days = {1, 2, 3};
 
