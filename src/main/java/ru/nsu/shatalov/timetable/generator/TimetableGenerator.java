@@ -37,7 +37,8 @@ public class TimetableGenerator {
         Model model = new Model("University Timetable");
 
         // Variables
-        IntVar[][] timetable = new IntVar[numberOfCourses][4]; //i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher
+        // i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher, [i][3] - day of week
+        IntVar[][] timetable = new IntVar[numberOfCourses][4];
         for (int i = 0; i < numberOfCourses; i++) {
             timetable[i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
             timetable[i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
@@ -48,13 +49,9 @@ public class TimetableGenerator {
         // Constraints
         for (int i = 0; i < numberOfCourses; i++) {
             for (int j = i + 1; j < numberOfCourses; j++) {
-                //Constraint sameRoom = model.arithm(timetable[i][0], "=", timetable[j][0]);
-                /*Constraint sameTimeSlot = */
+
                 model.or(model.arithm(timetable[i][3], "!=", timetable[j][3]),
                         model.arithm(timetable[i][1], "!=", timetable[j][1])).post();
-                //Constraint differentRooms = model.arithm(timetable[i][0], "!=", timetable[j][0]);
-                //model.ifThen(sameTimeSlot, differentRooms);
-                //model.ifThen(sameRoom, differentRooms);
             }
         }
 
