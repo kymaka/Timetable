@@ -14,7 +14,7 @@ public class TimetableGenerator {
     public void generate(List<Subject> subjects, List<Room> rooms, List<Teacher> teachers) {
         int numberOfCourses = subjects.size();
         int numberOfRooms = rooms.size();
-        int numberOfTimeSlots = 3;
+        int numberOfTimeSlots = 2;
 
         int[] days = {1, 2, 3};
 
@@ -42,7 +42,9 @@ public class TimetableGenerator {
         for (int i = 0; i < numberOfCourses; i++) {
             timetable[i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
             timetable[i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
-            timetable[i][2] = model.intVar("Course_" + subjects.get(i).getName() + "_Teacher", 0, teachers.size() - 1);
+            timetable[i][2] = model.intVar("Course_" + subjects.get(i).getName() + "_Teacher",
+                    0,
+                    teachers.size() - 1);
             timetable[i][3] = model.intVar("Course_" + i + "_Day", days);
         }
 
