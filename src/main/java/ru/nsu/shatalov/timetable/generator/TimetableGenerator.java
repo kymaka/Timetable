@@ -14,7 +14,9 @@ public class TimetableGenerator {
     public void generate(List<Subject> subjects, List<Room> rooms, List<Teacher> teachers) {
         int numberOfCourses = subjects.size();
         int numberOfRooms = rooms.size();
-        int numberOfTimeSlots = 5;
+        int numberOfTimeSlots = 2;
+
+        int[] days = {1, 2, 3};
 
         int[] courseCapacities = {50, 20, 60, 40};
         int[] courseRoomTypes = {3, 1, 2, 3};
@@ -35,11 +37,12 @@ public class TimetableGenerator {
         Model model = new Model("University Timetable");
 
         // Variables
-        IntVar[][] timetable = new IntVar[numberOfCourses][3]; //i - subject, [i][0] - room, [i][1] - timeslot
+        IntVar[][] timetable = new IntVar[numberOfCourses][4]; //i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher
         for (int i = 0; i < numberOfCourses; i++) {
             timetable[i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
             timetable[i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
             timetable[i][2] = model.intVar("Course_" + subjects.get(i).getName() + "_Teacher", 0, teachers.size() - 1);
+            timetable[i][3] = model.intVar("Course_" + i + "_Day", days);
         }
 
         // Constraints
@@ -47,7 +50,8 @@ public class TimetableGenerator {
             for (int j = i + 1; j < numberOfCourses; j++) {
                 //Constraint sameRoom = model.arithm(timetable[i][0], "=", timetable[j][0]);
                 /*Constraint sameTimeSlot = */
-                model.arithm(timetable[i][1], "!=", timetable[j][1]).post();
+                model.or(model.arithm(timetable[i][3], "!=", timetable[j][3]),
+                        model.arithm(timetable[i][1], "!=", timetable[j][1])).post();
                 //Constraint differentRooms = model.arithm(timetable[i][0], "!=", timetable[j][0]);
                 //model.ifThen(sameTimeSlot, differentRooms);
                 //model.ifThen(sameRoom, differentRooms);
@@ -87,10 +91,11 @@ public class TimetableGenerator {
             for (int i = 0; i < numberOfCourses; i++) {
                 System.out.println
                         (
-                                "Subject " + subjects.get(i).getName() + " -> Room: "
-                                        + rooms.get(timetable[i][0].getValue()).getNumber() + ", Time Slot: "
-                                        + timetable[i][1].getValue() + ",  Teacher: "
-                                        + teachers.get(timetable[i][2].getValue()).getName()
+                                "Subject " + subjects.get(i).getName()
+                                        + " -> Room: " + rooms.get(timetable[i][0].getValue()).getNumber()
+                                        + ", Time Slot: " + timetable[i][1].getValue()
+                                        + ",  Teacher: " + teachers.get(timetable[i][2].getValue()).getName()
+                                        + ", Day: " + timetable[i][3].getValue()
                         );
             }
         } else {
