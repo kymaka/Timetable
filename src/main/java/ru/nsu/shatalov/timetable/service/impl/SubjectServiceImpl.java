@@ -7,33 +7,32 @@ import ru.nsu.shatalov.timetable.service.interfaces.SubjectService;
 
 public class SubjectServiceImpl implements SubjectService {
 
-    private final SubjectRepository subjectRepository;
+  private final SubjectRepository subjectRepository;
 
-    public SubjectServiceImpl(SubjectRepository repository) {
-        this.subjectRepository = repository;
-    }
-    @Override
-    public void addSubject(Subject subject) {
-        subjectRepository.save(subject);
-    }
+  public SubjectServiceImpl(SubjectRepository repository) {
+    this.subjectRepository = repository;
+  }
 
-    @Override
-    public Subject getSubjectBy(int id) {
-        return null;
-    }
+  @Override
+  public void addSubject(Subject subject) {
+    subjectRepository.save(subject);
+  }
 
-    @Override
-    public Subject updateSubject(Subject subject) {
-        return null;
-    }
+  @Override
+  public Subject getSubjectBy(int id) {
+    return null;
+  }
 
-    @Override
-    public List<Subject> getAllSubjects() {
-        return subjectRepository.getAllSubjects();
-    }
+  @Override
+  public Subject updateSubject(Subject subject) {
+    return null;
+  }
 
-    @Override
-    public void deleteSubject(int id) {
+  @Override
+  public List<Subject> getAllSubjects() {
+    return subjectRepository.getAllSubjects();
+  }
 
-    }
+  @Override
+  public void deleteSubject(int id) {}
 }

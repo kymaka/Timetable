@@ -4,13 +4,13 @@ import java.util.List;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
 
 public interface SubjectService {
-    void addSubject(Subject subject);
+  void addSubject(Subject subject);
 
-    Subject getSubjectBy(int id);
+  Subject getSubjectBy(int id);
 
-    Subject updateSubject(Subject subject);
+  Subject updateSubject(Subject subject);
 
-    List<Subject> getAllSubjects();
+  List<Subject> getAllSubjects();
 
-    void deleteSubject(int id);
+  void deleteSubject(int id);
 }

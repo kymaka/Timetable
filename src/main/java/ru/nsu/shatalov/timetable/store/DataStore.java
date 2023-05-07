@@ -7,38 +7,39 @@ import ru.nsu.shatalov.timetable.model.constraint.Subject;
 import ru.nsu.shatalov.timetable.model.constraint.Teacher;
 
 public class DataStore {
-    private final List<Subject> subjects;
+  private final List<Subject> subjects;
 
-    private final List<Room> rooms;
+  private final List<Room> rooms;
 
-    private final List<Teacher> teachers;
+  private final List<Teacher> teachers;
 
-    public DataStore() {
-        this.subjects = new ArrayList<>();
-        this.rooms = new ArrayList<>();
-        this.teachers = new ArrayList<>();
-    }
+  public DataStore() {
+    this.subjects = new ArrayList<>();
+    this.rooms = new ArrayList<>();
+    this.teachers = new ArrayList<>();
+  }
 
-    public void addSubject(Subject subject) {
-        subjects.add(subject);
-    }
+  public void addSubject(Subject subject) {
+    subjects.add(subject);
+  }
 
-    public List<Subject> getAllSubjects() {
-        return new ArrayList<>(subjects);
-    }
-    public void addRoom(Room room) {
-        rooms.add(room);
-    }
+  public List<Subject> getAllSubjects() {
+    return new ArrayList<>(subjects);
+  }
 
-    public List<Room> getAllRooms() {
-        return new ArrayList<>(rooms);
-    }
+  public void addRoom(Room room) {
+    rooms.add(room);
+  }
 
-    public void addTeacher(Teacher teacher) {
-        teachers.add(teacher);
-    }
+  public List<Room> getAllRooms() {
+    return new ArrayList<>(rooms);
+  }
 
-    public List<Teacher> getAllTeachers() {
-        return new ArrayList<>(teachers);
-    }
+  public void addTeacher(Teacher teacher) {
+    teachers.add(teacher);
+  }
+
+  public List<Teacher> getAllTeachers() {
+    return new ArrayList<>(teachers);
+  }
 }

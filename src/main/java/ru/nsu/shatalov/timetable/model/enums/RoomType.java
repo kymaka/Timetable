@@ -1,30 +1,31 @@
 package ru.nsu.shatalov.timetable.model.enums;
 
 public enum RoomType {
-    Terminal("Terminal", 20, 1),
-    Lecture("Lecture", 200, 2),
-    General("General", 50, 3);
+  Terminal("Terminal", 20, 1),
+  Lecture("Lecture", 200, 2),
+  General("General", 50, 3);
 
-    RoomType(String label, int capacity, int integer) {
-        this.label = label;
-        this.capacity = capacity;
-        this.integer = integer;
-    }
-    private final String label;
+  RoomType(String label, int capacity, int integer) {
+    this.label = label;
+    this.capacity = capacity;
+    this.integer = integer;
+  }
 
-    private final int capacity;
+  private final String label;
 
-    private final int integer;
+  private final int capacity;
 
-    public String getLabel() {
-        return label;
-    }
+  private final int integer;
 
-    public int getCapacity() {
-        return capacity;
-    }
+  public String getLabel() {
+    return label;
+  }
 
-    public int toInt() {
-        return integer;
-    }
+  public int getCapacity() {
+    return capacity;
+  }
+
+  public int toInt() {
+    return integer;
+  }
 }

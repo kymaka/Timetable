@@ -6,18 +6,17 @@ import ru.nsu.shatalov.timetable.store.DataStore;
 
 public class TeacherRepository {
 
-    private final DataStore dataStore;
+  private final DataStore dataStore;
 
-    public TeacherRepository(DataStore dataStore) {
-        this.dataStore = dataStore;
-    }
+  public TeacherRepository(DataStore dataStore) {
+    this.dataStore = dataStore;
+  }
 
-    public void save(Teacher teacher) {
-        dataStore.addTeacher(teacher);
-    }
+  public void save(Teacher teacher) {
+    dataStore.addTeacher(teacher);
+  }
 
-    public List<Teacher> getAll() {
-        return dataStore.getAllTeachers();
-    }
-
+  public List<Teacher> getAll() {
+    return dataStore.getAllTeachers();
+  }
 }

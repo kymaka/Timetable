@@ -5,17 +5,17 @@ import ru.nsu.shatalov.timetable.model.constraint.Subject;
 import ru.nsu.shatalov.timetable.store.DataStore;
 
 public class SubjectRepository {
-    private final DataStore dataStore;
+  private final DataStore dataStore;
 
-    public SubjectRepository(DataStore dataStore) {
-        this.dataStore = dataStore;
-    }
+  public SubjectRepository(DataStore dataStore) {
+    this.dataStore = dataStore;
+  }
 
-    public void save(Subject subject) {
-        dataStore.addSubject(subject);
-    }
+  public void save(Subject subject) {
+    dataStore.addSubject(subject);
+  }
 
-    public List<Subject> getAllSubjects() {
-        return dataStore.getAllSubjects();
-    }
+  public List<Subject> getAllSubjects() {
+    return dataStore.getAllSubjects();
+  }
 }

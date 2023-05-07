@@ -6,18 +6,17 @@ import ru.nsu.shatalov.timetable.store.DataStore;
 
 public class RoomRepository {
 
-    private final DataStore dataStore;
+  private final DataStore dataStore;
 
+  public RoomRepository(DataStore dataStore) {
+    this.dataStore = dataStore;
+  }
 
-    public RoomRepository(DataStore dataStore) {
-        this.dataStore = dataStore;
-    }
+  public void save(Room room) {
+    dataStore.addRoom(room);
+  }
 
-    public void save(Room room) {
-        dataStore.addRoom(room);
-    }
-
-    public List<Room> getAllRooms() {
-        return dataStore.getAllRooms();
-    }
+  public List<Room> getAllRooms() {
+    return dataStore.getAllRooms();
+  }
 }

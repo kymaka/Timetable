@@ -17,54 +17,53 @@ import ru.nsu.shatalov.timetable.store.DataStore;
 
 public class Main {
 
-    public static void main(String[] args) {
-        DataStore dataStore = new DataStore();
-        SubjectRepository subjectRepository = new SubjectRepository(dataStore);
-        SubjectServiceImpl subjectService = new SubjectServiceImpl(subjectRepository);
+  public static void main(String[] args) {
+    DataStore dataStore = new DataStore();
+    SubjectRepository subjectRepository = new SubjectRepository(dataStore);
+    SubjectServiceImpl subjectService = new SubjectServiceImpl(subjectRepository);
 
-        RoomRepository roomRepository = new RoomRepository(dataStore);
-        RoomServiceImpl roomService = new RoomServiceImpl(roomRepository);
+    RoomRepository roomRepository = new RoomRepository(dataStore);
+    RoomServiceImpl roomService = new RoomServiceImpl(roomRepository);
 
-        TeacherRepository teacherRepository = new TeacherRepository(dataStore);
-        TeacherServiceImpl teacherService = new TeacherServiceImpl(teacherRepository);
+    TeacherRepository teacherRepository = new TeacherRepository(dataStore);
+    TeacherServiceImpl teacherService = new TeacherServiceImpl(teacherRepository);
 
-        TimetableGenerator generator = new TimetableGenerator();
+    TimetableGenerator generator = new TimetableGenerator();
 
-        Subject[] subjects = {
-                new Subject("Math", RoomType.Lecture, SubjectType.Lecture),
-                new Subject("Math", RoomType.General, SubjectType.Seminar),
-                new Subject("Computer Science", RoomType.Lecture, SubjectType.Lecture),
-                new Subject("Bioinformatics", RoomType.Lecture, SubjectType.Lecture),
-        };
+    Subject[] subjects = {
+        new Subject("Math", RoomType.Lecture, SubjectType.Lecture),
+        new Subject("Math", RoomType.General, SubjectType.Seminar),
+        new Subject("Computer Science", RoomType.Lecture, SubjectType.Lecture),
+        new Subject("Bioinformatics", RoomType.Lecture, SubjectType.Lecture),
+    };
 
-        Room[] rooms = {
-                new Room("1101", RoomType.General),
-                new Room("1102t", RoomType.Terminal),
-                new Room("1103", RoomType.Lecture),
-        };
+    Room[] rooms = {
+        new Room("1101", RoomType.General),
+        new Room("1102t", RoomType.Terminal),
+        new Room("1103", RoomType.Lecture),
+    };
 
-        Teacher[] teachers = {
-                new Teacher("Alexander", List.of(subjects[0])),
-                new Teacher("Anton", List.of(subjects[1])),
-                new Teacher("Vladimir", List.of(subjects[2], subjects[3]))
-        };
+    Teacher[] teachers = {
+        new Teacher("Alexander", List.of(subjects[0])),
+        new Teacher("Anton", List.of(subjects[1])),
+        new Teacher("Vladimir", List.of(subjects[2], subjects[3]))
+    };
 
-        for (Subject subject : subjects) {
-            subjectService.addSubject(subject);
-        }
-
-        for (Room room : rooms) {
-            roomService.addRoom(room);
-        }
-
-        for (Teacher teacher : teachers) {
-            teacherService.addTeacher(teacher);
-        }
-
-        generator.generate(
-                subjectService.getAllSubjects(),
-                roomService.getAllRooms(),
-                teacherService.getAllTeachers()
-        );
+    for (Subject subject : subjects) {
+      subjectService.addSubject(subject);
     }
+
+    for (Room room : rooms) {
+      roomService.addRoom(room);
+    }
+
+    for (Teacher teacher : teachers) {
+      teacherService.addTeacher(teacher);
+    }
+
+    generator.generate(
+        subjectService.getAllSubjects(),
+        roomService.getAllRooms(),
+        teacherService.getAllTeachers());
+  }
 }
