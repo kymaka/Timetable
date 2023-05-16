@@ -5,6 +5,7 @@ import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
 import ru.nsu.shatalov.timetable.model.constraint.Room;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
 import ru.nsu.shatalov.timetable.model.constraint.Teacher;
+import ru.nsu.shatalov.timetable.model.enums.Day;
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
 import ru.nsu.shatalov.timetable.model.enums.SubjectType;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
@@ -44,9 +45,9 @@ public class Main {
     };
 
     Teacher[] teachers = {
-        new Teacher("Alexander", List.of(subjects[0])),
-        new Teacher("Anton", List.of(subjects[1])),
-        new Teacher("Vladimir", List.of(subjects[2], subjects[3]))
+      new Teacher("Alexander", List.of(subjects[0]), List.of(Day.Monday, Day.Tuesday)),
+      new Teacher("Anton", List.of(subjects[1]), List.of(Day.Tuesday)),
+      new Teacher("Vladimir", List.of(subjects[2], subjects[3]), List.of(Day.Tuesday, Day.Thursday))
     };
 
     for (Subject subject : subjects) {

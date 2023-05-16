@@ -5,9 +5,11 @@ import org.chocosolver.solver.variables.IntVar;
 import ru.nsu.shatalov.timetable.model.constraint.Room;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
 
+import java.util.Arrays;
 import java.util.List;
 
 import ru.nsu.shatalov.timetable.model.constraint.Teacher;
+import ru.nsu.shatalov.timetable.model.enums.Day;
 
 public class TimetableGenerator {
 
@@ -16,7 +18,7 @@ public class TimetableGenerator {
     int numberOfRooms = rooms.size();
     int numberOfTimeSlots = 2;
 
-    int[] days = {1, 2, 3};
+    Day[] days = {Day.Monday, Day.Tuesday, Day.Thursday};
 
     int[] courseCapacities = {50, 20, 60, 40};
     int[] courseRoomTypes = {3, 1, 2, 3};
@@ -44,7 +46,7 @@ public class TimetableGenerator {
       timetable[i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
       timetable[i][2] =
           model.intVar("Course_" + subjects.get(i).getName() + "_Teacher", 0, teachers.size() - 1);
-      timetable[i][3] = model.intVar("Course_" + i + "_Day", days);
+      timetable[i][3] = model.intVar("Course_" + i + "_Day", 0, days.length - 1);
     }
 
     // Constraints
@@ -63,6 +65,7 @@ public class TimetableGenerator {
       model.arithm(timetable[i][0], "<", numberOfRooms).post();
       model.arithm(timetable[i][1], "<", numberOfTimeSlots).post();
       model.arithm(timetable[i][2], "<", teachers.size()).post();
+      model.arithm(timetable[i][3], "<", days.length).post();
 
       // Checking for correct room type.
       IntVar roomTypeVar = model.intVar(roomTypes);
@@ -79,12 +82,21 @@ public class TimetableGenerator {
       model.element(teacherVar, teacherArray, timetable[i][2]).post();
 
       for (int t = 0; t < teachers.size(); t++) {
-        for (int s = 0; s < teachers.get(t).getSubjects().size(); s++) {
-          if (teachers.get(t).getSubjects().get(s).equals(subjects.get(i))) {
+        Teacher teacher = teachers.get(t);
+
+        // Convert the working days of the teacher to their corresponding indices in the days array
+        int[] workingDays = teacher.getWorkingDays().stream()
+            .mapToInt(day -> Arrays.asList(days).indexOf(day))
+            .toArray();
+
+        for (int s = 0; s < teacher.getSubjects().size(); s++) {
+          if (teacher.getSubjects().get(s).equals(subjects.get(i))) {
             model.arithm(teacherVar, "=", t).post();
+            model.member(timetable[i][3], workingDays).post();
           }
         }
       }
+
     }
 
     // Solve and display
@@ -100,7 +112,7 @@ public class TimetableGenerator {
                 + ",  Teacher: "
                 + teachers.get(timetable[i][2].getValue()).getName()
                 + ", Day: "
-                + timetable[i][3].getValue());
+                + days[timetable[i][3].getValue()].name());
       }
     } else {
       System.out.println("No solution found.");
