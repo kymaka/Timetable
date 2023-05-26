@@ -39,14 +39,16 @@ public class TimetableGenerator {
     Model model = new Model("University Timetable");
 
     // Variables
-    // i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher, [i][3] - day of week
-    IntVar[][] timetable = new IntVar[numberOfCourses][4];
+    // i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher, [i][3] - day of week,
+    // [i][4] - group
+    IntVar[][] timetable = new IntVar[numberOfCourses][5];
     for (int i = 0; i < numberOfCourses; i++) {
       timetable[i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
       timetable[i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
       timetable[i][2] =
           model.intVar("Course_" + subjects.get(i).getName() + "_Teacher", 0, teachers.size() - 1);
       timetable[i][3] = model.intVar("Course_" + i + "_Day", 0, days.length - 1);
+      timetable[i][4] = model.intVar("Course_" + i + "_Group", 0, 2);
     }
 
     // Constraints
@@ -85,9 +87,10 @@ public class TimetableGenerator {
         Teacher teacher = teachers.get(t);
 
         // Convert the working days of the teacher to their corresponding indices in the days array
-        int[] workingDays = teacher.getWorkingDays().stream()
-            .mapToInt(day -> Arrays.asList(days).indexOf(day))
-            .toArray();
+        int[] workingDays =
+            teacher.getWorkingDays().stream()
+                .mapToInt(day -> Arrays.asList(days).indexOf(day))
+                .toArray();
 
         for (int s = 0; s < teacher.getSubjects().size(); s++) {
           if (teacher.getSubjects().get(s).equals(subjects.get(i))) {
@@ -96,7 +99,6 @@ public class TimetableGenerator {
           }
         }
       }
-
     }
 
     // Solve and display
