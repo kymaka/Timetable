@@ -35,20 +35,22 @@ public class TimetableGenerator {
       teacherArray[i] = i;
     }
 
+
+
     // Model
     Model model = new Model("University Timetable");
 
     // Variables
     // i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher, [i][3] - day of week,
     // [i][4] - group
-    IntVar[][] timetable = new IntVar[numberOfCourses][5];
+    IntVar[][][] timetable = new IntVar[3][numberOfCourses][4];
     for (int i = 0; i < numberOfCourses; i++) {
-      timetable[i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
-      timetable[i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
-      timetable[i][2] =
+      timetable[0][i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
+      timetable[0][i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
+      timetable[0][i][2] =
           model.intVar("Course_" + subjects.get(i).getName() + "_Teacher", 0, teachers.size() - 1);
-      timetable[i][3] = model.intVar("Course_" + i + "_Day", 0, days.length - 1);
-      timetable[i][4] = model.intVar("Course_" + i + "_Group", 0, 2);
+      timetable[0][i][3] = model.intVar("Course_" + i + "_Day", 0, days.length - 1);
+      //timetable[0][i][4] = model.intVar("Course_" + i + "_Group", 0, 2);
     }
 
     // Constraints
@@ -57,31 +59,31 @@ public class TimetableGenerator {
 
         model
             .or(
-                model.arithm(timetable[i][3], "!=", timetable[j][3]),
-                model.arithm(timetable[i][1], "!=", timetable[j][1]))
+                model.arithm(timetable[0][i][3], "!=", timetable[0][j][3]),
+                model.arithm(timetable[0][i][1], "!=", timetable[0][j][1]))
             .post();
       }
     }
 
     for (int i = 0; i < numberOfCourses; i++) {
-      model.arithm(timetable[i][0], "<", numberOfRooms).post();
-      model.arithm(timetable[i][1], "<", numberOfTimeSlots).post();
-      model.arithm(timetable[i][2], "<", teachers.size()).post();
-      model.arithm(timetable[i][3], "<", days.length).post();
+      model.arithm(timetable[0][i][0], "<", numberOfRooms).post();
+      model.arithm(timetable[0][i][1], "<", numberOfTimeSlots).post();
+      model.arithm(timetable[0][i][2], "<", teachers.size()).post();
+      model.arithm(timetable[0][i][3], "<", days.length).post();
 
       // Checking for correct room type.
       IntVar roomTypeVar = model.intVar(roomTypes);
-      model.element(roomTypeVar, roomTypes, timetable[i][0]).post();
+      model.element(roomTypeVar, roomTypes, timetable[0][i][0]).post();
       model.arithm(roomTypeVar, "=", courseRoomTypes[i]).post();
 
       // Checking for right room capacity.
       IntVar roomCapacityVar = model.intVar(roomCapacities);
-      model.element(roomCapacityVar, roomCapacities, timetable[i][0]).post();
+      model.element(roomCapacityVar, roomCapacities, timetable[0][i][0]).post();
       model.arithm(roomCapacityVar, ">=", courseCapacities[i]).post();
 
       // Finding qualified teacher.
       IntVar teacherVar = model.intVar(teacherArray);
-      model.element(teacherVar, teacherArray, timetable[i][2]).post();
+      model.element(teacherVar, teacherArray, timetable[0][i][2]).post();
 
       for (int t = 0; t < teachers.size(); t++) {
         Teacher teacher = teachers.get(t);
@@ -95,7 +97,7 @@ public class TimetableGenerator {
         for (int s = 0; s < teacher.getSubjects().size(); s++) {
           if (teacher.getSubjects().get(s).equals(subjects.get(i))) {
             model.arithm(teacherVar, "=", t).post();
-            model.member(timetable[i][3], workingDays).post();
+            model.member(timetable[0][i][3], workingDays).post();
           }
         }
       }
@@ -108,13 +110,13 @@ public class TimetableGenerator {
             "Subject "
                 + subjects.get(i).getName()
                 + " -> Room: "
-                + rooms.get(timetable[i][0].getValue()).getNumber()
+                + rooms.get(timetable[0][i][0].getValue()).getNumber()
                 + ", Time Slot: "
-                + timetable[i][1].getValue()
+                + timetable[0][i][1].getValue()
                 + ",  Teacher: "
-                + teachers.get(timetable[i][2].getValue()).getName()
+                + teachers.get(timetable[0][i][2].getValue()).getName()
                 + ", Day: "
-                + days[timetable[i][3].getValue()].name());
+                + days[timetable[0][i][3].getValue()].name());
       }
     } else {
       System.out.println("No solution found.");
