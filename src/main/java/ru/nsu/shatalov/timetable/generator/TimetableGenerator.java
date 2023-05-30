@@ -120,7 +120,7 @@ public class TimetableGenerator {
     }
 
     // Solve and display
-    if (model.getSolver().solve()) {
+/*    if (model.getSolver().solve()) {
       for (int g = 0; g < numberOfGroups; g++) {
         for (int i = 0; i < numberOfCourses; i++) {
           System.out.println(
@@ -136,6 +136,31 @@ public class TimetableGenerator {
                   + teachers.get(timetable[g][i][2].getValue()).getName()
                   + ", Day: "
                   + days[timetable[g][i][3].getValue()].name());
+        }
+      }
+    } else {
+      System.out.println("No solution found.");
+    }*/
+    if (model.getSolver().solve()) {
+      for (int d = 0; d < days.length; d++) {
+        for (int g = 0; g < numberOfGroups; g++) {
+          for (int i = 0; i < numberOfCourses; i++) {
+            if (timetable[g][i][3].getValue() == d) {
+              System.out.println(
+                  "Day: "
+                      + days[timetable[g][i][3].getValue()].name()
+                      + ", Subject "
+                      + subjects.get(i).getName()
+                      + " -> Room: "
+                      + rooms.get(timetable[g][i][0].getValue()).getNumber()
+                      + ", Time Slot: "
+                      + timetable[g][i][1].getValue()
+                      + ",  Teacher: "
+                      + teachers.get(timetable[g][i][2].getValue()).getName()
+                      + ", Group: "
+                      + g);
+            }
+          }
         }
       }
     } else {
