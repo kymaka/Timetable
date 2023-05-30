@@ -16,7 +16,8 @@ public class TimetableGenerator {
   public void generate(List<Subject> subjects, List<Room> rooms, List<Teacher> teachers) {
     int numberOfCourses = subjects.size();
     int numberOfRooms = rooms.size();
-    int numberOfTimeSlots = 3;
+    int numberOfTimeSlots = 5;
+    int numberOfGroups = 3;
 
     Day[] days = {Day.Monday, Day.Tuesday, Day.Thursday};
 
@@ -39,11 +40,11 @@ public class TimetableGenerator {
     Model model = new Model("University Timetable");
 
     // Variables
-    // i - subject, [i][0] - room, [i][1] - timeslot, [i][2] - Teacher, [i][3] - day of week,
-    // [i][4] - group
-    IntVar[][][] timetable = new IntVar[2][numberOfCourses][4];
+    // g - group, i - subject, [g][i][0] - room, [g][i][1] - timeslot, [g][i][2] - Teacher,
+    // [g][i][3] - day of week
+    IntVar[][][] timetable = new IntVar[numberOfGroups][numberOfCourses][4];
 
-    for (int g = 0; g < 2; g++) {
+    for (int g = 0; g < numberOfGroups; g++) {
       for (int i = 0; i < numberOfCourses; i++) {
         timetable[g][i][0] = model.intVar("Course_" + i + "_Room", roomNumbers);
         timetable[g][i][1] = model.intVar("Course_" + i + "_TimeSlot", 0, numberOfTimeSlots - 1);
@@ -51,31 +52,33 @@ public class TimetableGenerator {
             model.intVar(
                 "Course_" + subjects.get(i).getName() + "_Teacher", 0, teachers.size() - 1);
         timetable[g][i][3] = model.intVar("Course_" + i + "_Day", 0, days.length - 1);
-        // timetable[0][i][4] = model.intVar("Course_" + i + "_Group", 0, 2);
       }
     }
 
     // Constraints
-    for (int g = 0; g < 2; g++) {
-      for (int g2 = g + 1; g2 < 2; g2++) {
+    for (int g = 0; g < numberOfGroups; g++) {
+      for (int g2 = 0; g2 < numberOfGroups; g2++) {
         for (int i = 0; i < numberOfCourses; i++) {
-          for (int j = i + 1; j < numberOfCourses; j++) {
-
-            model
-                .or(
-                    model.arithm(timetable[g][i][3], "!=", timetable[g][j][3]),
-                    model.arithm(timetable[g][i][1], "!=", timetable[g][j][1]))
-                .post();
-            model
-                .or(
-                    model.arithm(timetable[g][i][3], "!=", timetable[g2][j][3]),
-                    model.arithm(timetable[g][i][1], "!=", timetable[g2][j][1])
-                ).post();
+          for (int j = 0; j < numberOfCourses; j++) {
+            if (i != j) {
+              model
+                  .or(
+                      model.arithm(timetable[g][i][3], "!=", timetable[g][j][3]),
+                      model.arithm(timetable[g][i][1], "!=", timetable[g][j][1]))
+                  .post();
+            }
+            if (g != g2) {
+              model
+                  .or(
+                      model.arithm(timetable[g][i][3], "!=", timetable[g2][j][3]),
+                      model.arithm(timetable[g][i][1], "!=", timetable[g2][j][1]))
+                  .post();
+            }
           }
         }
       }
     }
-    for (int g = 0; g < 2; g++) {
+    for (int g = 0; g < numberOfGroups; g++) {
       for (int i = 0; i < numberOfCourses; i++) {
         model.arithm(timetable[g][i][0], "<", numberOfRooms).post();
         model.arithm(timetable[g][i][1], "<", numberOfTimeSlots).post();
@@ -118,7 +121,7 @@ public class TimetableGenerator {
 
     // Solve and display
     if (model.getSolver().solve()) {
-      for (int g = 0; g < 2; g++) {
+      for (int g = 0; g < numberOfGroups; g++) {
         for (int i = 0; i < numberOfCourses; i++) {
           System.out.println(
               "Group: "
