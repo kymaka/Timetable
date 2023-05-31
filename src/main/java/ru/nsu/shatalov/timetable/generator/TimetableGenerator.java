@@ -1,13 +1,12 @@
 package ru.nsu.shatalov.timetable.generator;
 
+import java.util.Arrays;
+import java.util.List;
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 import ru.nsu.shatalov.timetable.model.constraint.Room;
 import ru.nsu.shatalov.timetable.model.constraint.Subject;
-
-import java.util.Arrays;
-import java.util.List;
-
 import ru.nsu.shatalov.timetable.model.constraint.Teacher;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 
@@ -16,13 +15,13 @@ public class TimetableGenerator {
   public void generate(List<Subject> subjects, List<Room> rooms, List<Teacher> teachers) {
     int numberOfCourses = subjects.size();
     int numberOfRooms = rooms.size();
-    int numberOfTimeSlots = 5;
+    int numberOfTimeSlots = 3;
     int numberOfGroups = 3;
 
-    Day[] days = {Day.Monday, Day.Tuesday, Day.Thursday};
+    Day[] days = {Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday};
 
-    int[] courseCapacities = {50, 20, 60, 40};
-    int[] courseRoomTypes = {3, 1, 2, 3};
+    int[] courseCapacities = {50, 20, 60, 40, 50};
+    int[] courseRoomTypes = {3, 1, 2, 3, 3};
     int[] roomNumbers = new int[numberOfRooms];
     int[] roomCapacities = new int[numberOfRooms];
     int[] roomTypes = new int[numberOfRooms];
@@ -60,24 +59,30 @@ public class TimetableGenerator {
       for (int g2 = 0; g2 < numberOfGroups; g2++) {
         for (int i = 0; i < numberOfCourses; i++) {
           for (int j = 0; j < numberOfCourses; j++) {
-            if (i != j) {
-              model
-                  .or(
-                      model.arithm(timetable[g][i][3], "!=", timetable[g][j][3]),
-                      model.arithm(timetable[g][i][1], "!=", timetable[g][j][1]))
-                  .post();
-            }
-            if (g != g2) {
+            if (i != j || g != g2) {
               model
                   .or(
                       model.arithm(timetable[g][i][3], "!=", timetable[g2][j][3]),
-                      model.arithm(timetable[g][i][1], "!=", timetable[g2][j][1]))
+                      model.arithm(timetable[g][i][1], "!=", timetable[g2][j][1]),
+                      model.arithm(timetable[g][i][2], "!=", timetable[g2][j][2]))
                   .post();
             }
           }
         }
+        // Additional constraint to ensure the same subject is not scheduled for the same group at the same time
+        for (int i = 0; i < numberOfCourses; i++) {
+          for (int j = i + 1; j < numberOfCourses; j++) {
+            model
+                .or(
+                    model.arithm(timetable[g][i][3], "!=", timetable[g][j][3]),
+                    model.arithm(timetable[g][i][1], "!=", timetable[g][j][1]))
+                .post();
+          }
+        }
       }
     }
+
+
     for (int g = 0; g < numberOfGroups; g++) {
       for (int i = 0; i < numberOfCourses; i++) {
         model.arithm(timetable[g][i][0], "<", numberOfRooms).post();
@@ -141,7 +146,8 @@ public class TimetableGenerator {
     } else {
       System.out.println("No solution found.");
     }*/
-    if (model.getSolver().solve()) {
+    Solver solver = model.getSolver();
+    if (solver.solve()) {
       for (int d = 0; d < days.length; d++) {
         for (int g = 0; g < numberOfGroups; g++) {
           for (int i = 0; i < numberOfCourses; i++) {
@@ -149,7 +155,7 @@ public class TimetableGenerator {
               System.out.println(
                   "Day: "
                       + days[timetable[g][i][3].getValue()].name()
-                      + ", Subject "
+                      + ", Subject: "
                       + subjects.get(i).getName()
                       + " -> Room: "
                       + rooms.get(timetable[g][i][0].getValue()).getNumber()

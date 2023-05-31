@@ -33,9 +33,10 @@ public class Main {
 
     Subject[] subjects = {
         new Subject("Math", RoomType.Lecture, SubjectType.Lecture),
-        new Subject("Math", RoomType.General, SubjectType.Seminar),
+        new Subject("Math Seminar", RoomType.General, SubjectType.Seminar),
         new Subject("Computer Science", RoomType.Lecture, SubjectType.Lecture),
         new Subject("Bioinformatics", RoomType.Lecture, SubjectType.Lecture),
+        new Subject("System Design", RoomType.Lecture, SubjectType.Lecture)
     };
 
     Room[] rooms = {
@@ -46,8 +47,13 @@ public class Main {
 
     Teacher[] teachers = {
       new Teacher("Alexander", List.of(subjects[0]), List.of(Day.Monday, Day.Tuesday)),
-      new Teacher("Anton", List.of(subjects[1]), List.of(Day.Tuesday)),
-      new Teacher("Vladimir", List.of(subjects[2], subjects[3]), List.of(Day.Tuesday, Day.Thursday))
+      new Teacher("Anton", List.of(subjects[1]), List.of(Day.Tuesday, Day.Wednesday)),
+      new Teacher(
+          "Vladimir", List.of(subjects[2], subjects[3]), List.of(Day.Tuesday, Day.Thursday)),
+      new Teacher(
+          "Maksim",
+          List.of(subjects[4]),
+          List.of(Day.Wednesday, Day.Friday))
     };
 
     for (Subject subject : subjects) {
