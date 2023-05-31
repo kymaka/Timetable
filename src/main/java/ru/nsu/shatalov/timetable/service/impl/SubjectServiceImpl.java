@@ -1,7 +1,7 @@
 package ru.nsu.shatalov.timetable.service.impl;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 import ru.nsu.shatalov.timetable.repository.SubjectRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.SubjectService;
 

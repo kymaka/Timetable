@@ -2,9 +2,9 @@ package ru.nsu.shatalov.timetable;
 
 import java.util.List;
 import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
-import ru.nsu.shatalov.timetable.model.constraint.Room;
-import ru.nsu.shatalov.timetable.model.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.constraint.Teacher;
+import ru.nsu.shatalov.timetable.model.object.constraint.Room;
+import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
 import ru.nsu.shatalov.timetable.model.enums.SubjectType;

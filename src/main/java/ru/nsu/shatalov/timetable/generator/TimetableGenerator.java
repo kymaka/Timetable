@@ -5,9 +5,9 @@ import java.util.List;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
-import ru.nsu.shatalov.timetable.model.constraint.Room;
-import ru.nsu.shatalov.timetable.model.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.constraint.Teacher;
+import ru.nsu.shatalov.timetable.model.object.constraint.Room;
+import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 
 public class TimetableGenerator {
@@ -69,7 +69,8 @@ public class TimetableGenerator {
             }
           }
         }
-        // Additional constraint to ensure the same subject is not scheduled for the same group at the same time
+        // Additional constraint to ensure the same subject is not scheduled for the same group at
+        // the same time
         for (int i = 0; i < numberOfCourses; i++) {
           for (int j = i + 1; j < numberOfCourses; j++) {
             model
@@ -81,7 +82,6 @@ public class TimetableGenerator {
         }
       }
     }
-
 
     for (int g = 0; g < numberOfGroups; g++) {
       for (int i = 0; i < numberOfCourses; i++) {
@@ -125,7 +125,7 @@ public class TimetableGenerator {
     }
 
     // Solve and display
-/*    if (model.getSolver().solve()) {
+    /*    if (model.getSolver().solve()) {
       for (int g = 0; g < numberOfGroups; g++) {
         for (int i = 0; i < numberOfCourses; i++) {
           System.out.println(

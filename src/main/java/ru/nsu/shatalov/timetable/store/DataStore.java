@@ -2,9 +2,9 @@ package ru.nsu.shatalov.timetable.store;
 
 import java.util.ArrayList;
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.constraint.Room;
-import ru.nsu.shatalov.timetable.model.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.constraint.Teacher;
+import ru.nsu.shatalov.timetable.model.object.constraint.Room;
+import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 
 public class DataStore {
   private final List<Subject> subjects;
