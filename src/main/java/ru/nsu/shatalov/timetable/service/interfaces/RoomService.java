@@ -7,7 +7,7 @@ public interface RoomService {
 
   void addRoom(Room room);
 
-  Room getRoomBy(int id);
+  Room getRoomById(int id);
 
   Room updateRoom(Room room);
 

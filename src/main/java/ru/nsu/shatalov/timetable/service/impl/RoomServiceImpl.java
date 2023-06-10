@@ -19,7 +19,7 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Override
-  public Room getRoomBy(int id) {
+  public Room getRoomById(int id) {
     return null;
   }
 
