@@ -6,6 +6,7 @@ import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
 import ru.nsu.shatalov.timetable.model.object.Group;
+import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
@@ -14,11 +15,15 @@ import ru.nsu.shatalov.timetable.model.enums.Day;
 public class TimetableGenerator {
 
   public void generate(
-      List<Subject> subjects, List<Room> rooms, List<Teacher> teachers, List<Group> groups) {
+      List<Subject> subjects,
+      List<Room> rooms,
+      List<Teacher> teachers,
+      List<Group> groups,
+      List<TimeSlot> timeSlots) {
     int numberOfCourses = subjects.size();
     int numberOfRooms = rooms.size();
     int numberOfTeachers = teachers.size();
-    int numberOfTimeSlots = 3;
+    int numberOfTimeSlots = timeSlots.size();
     int numberOfGroups = groups.size();
 
     Day[] days = {Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday};
@@ -158,8 +163,8 @@ public class TimetableGenerator {
                       + subjects.get(i).getName()
                       + " -> Room: "
                       + rooms.get(timetable[g][i][0].getValue()).getNumber()
-                      + ", TimeSlot Slot: "
-                      + timetable[g][i][1].getValue()
+                      + ", Time: "
+                      + timeSlots.get(timetable[g][i][1].getValue()).getTime()
                       + ",  Teacher: "
                       + teachers.get(timetable[g][i][2].getValue()).getName()
                       + ", Group: "

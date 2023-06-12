@@ -19,4 +19,8 @@ public class TimeSlot {
         TimeSlot other = (TimeSlot) obj;
         return time == other.time;
     }
+
+    public int getTime() {
+        return this.time;
+    }
 }

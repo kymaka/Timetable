@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
 import ru.nsu.shatalov.timetable.model.object.Group;
+import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
@@ -70,6 +71,10 @@ public class Main {
                 new Group("20214", List.of(subjects)),
                 new Group("20215", List.of(subjects[0]))));
 
+    // TODO: Add data storage for timeslots.
+    ArrayList<TimeSlot> timeSlots =
+        new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));
+
     for (Group group : groups) {
       groupService.addGroup(group);
     }
@@ -90,6 +95,7 @@ public class Main {
         subjectService.getAllSubjects(),
         roomService.getAllRooms(),
         teacherService.getAllTeachers(),
-        groupService.getAllGroups());
+        groupService.getAllGroups(),
+        timeSlots);
   }
 }
