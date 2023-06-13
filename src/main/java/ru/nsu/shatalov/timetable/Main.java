@@ -15,10 +15,12 @@ import ru.nsu.shatalov.timetable.repository.GroupRepository;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
 import ru.nsu.shatalov.timetable.repository.SubjectRepository;
 import ru.nsu.shatalov.timetable.repository.TeacherRepository;
+import ru.nsu.shatalov.timetable.repository.TimeSlotRepository;
 import ru.nsu.shatalov.timetable.service.impl.GroupServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.RoomServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.SubjectServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.TeacherServiceImpl;
+import ru.nsu.shatalov.timetable.service.impl.TimeSlotServiceImpl;
 import ru.nsu.shatalov.timetable.store.DataStore;
 
 public class Main {
@@ -36,6 +38,9 @@ public class Main {
 
     GroupRepository groupRepository = new GroupRepository(dataStore);
     GroupServiceImpl groupService = new GroupServiceImpl(groupRepository);
+
+    TimeSlotRepository timeSlotRepository = new TimeSlotRepository(dataStore);
+    TimeSlotServiceImpl timeSlotService = new TimeSlotServiceImpl(timeSlotRepository);
 
     TimetableGenerator generator = new TimetableGenerator();
 
@@ -75,6 +80,10 @@ public class Main {
     ArrayList<TimeSlot> timeSlots =
         new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));
 
+    for (TimeSlot timeSlot : timeSlots) {
+      timeSlotService.addTimeSlot(timeSlot);
+    }
+
     for (Group group : groups) {
       groupService.addGroup(group);
     }
@@ -96,6 +105,6 @@ public class Main {
         roomService.getAllRooms(),
         teacherService.getAllTeachers(),
         groupService.getAllGroups(),
-        timeSlots);
+        timeSlotService.getAllTimeSlots());
   }
 }

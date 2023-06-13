@@ -5,7 +5,7 @@ import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 
 public class Group {
 
-  private final String number;
+  private String number;
 
   private final List<Subject> subjects;
 
@@ -18,7 +18,21 @@ public class Group {
     return this.number;
   }
 
+  public String setNumber(String newNumber) {
+    this.number = newNumber;
+    return this.number;
+  }
+
   public List<Subject> getSubjects() {
+    return this.subjects;
+  }
+
+  public Subject getSubjectByID(int id) {
+    return this.subjects.get(id);
+  }
+
+  public List<Subject> addSubject(Subject subject) {
+    this.subjects.add(subject);
     return this.subjects;
   }
 }
