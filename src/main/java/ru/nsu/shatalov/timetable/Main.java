@@ -76,7 +76,6 @@ public class Main {
                 new Group("20214", List.of(subjects)),
                 new Group("20215", List.of(subjects[0]))));
 
-    // TODO: Add data storage for timeslots.
     ArrayList<TimeSlot> timeSlots =
         new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));
 
