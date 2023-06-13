@@ -1,7 +1,7 @@
 package ru.nsu.shatalov.timetable.repository;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 import ru.nsu.shatalov.timetable.store.DataStore;
 
 public class SubjectRepository {

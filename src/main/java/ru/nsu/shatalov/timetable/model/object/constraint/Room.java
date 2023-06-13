@@ -1,4 +1,4 @@
-package ru.nsu.shatalov.timetable.model.constraint;
+package ru.nsu.shatalov.timetable.model.object.constraint;
 
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
 

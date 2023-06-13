@@ -1,13 +1,13 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.constraint.Room;
+import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 
 public interface RoomService {
 
   void addRoom(Room room);
 
-  Room getRoomBy(int id);
+  Room getRoomById(int id);
 
   Room updateRoom(Room room);
 

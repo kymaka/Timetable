@@ -1,7 +1,7 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.constraint.Subject;
+import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 
 public interface SubjectService {
   void addSubject(Subject subject);

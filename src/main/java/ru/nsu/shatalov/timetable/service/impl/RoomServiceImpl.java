@@ -1,7 +1,7 @@
 package ru.nsu.shatalov.timetable.service.impl;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.constraint.Room;
+import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.RoomService;
 
@@ -19,7 +19,7 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Override
-  public Room getRoomBy(int id) {
+  public Room getRoomById(int id) {
     return null;
   }
 
