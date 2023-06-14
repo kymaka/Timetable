@@ -1,9 +1,9 @@
 package ru.nsu.shatalov.timetable.model.enums;
 
 public enum RoomType {
-  Terminal("Terminal", 20, 1),
-  Lecture("Lecture", 200, 2),
-  General("General", 50, 3);
+  Terminal("Terminal", 20, 0),
+  Lecture("Lecture", 200, 1),
+  General("General", 50, 2);
 
   RoomType(String label, int capacity, int integer) {
     this.label = label;

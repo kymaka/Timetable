@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import java.util.List;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 
 @Entity
@@ -17,7 +19,9 @@ public class StudentGroup {
 
   private String number;
 
-  @ManyToMany private List<Subject> subjects;
+  @ManyToMany
+  @Cascade(CascadeType.ALL)
+  private List<Subject> subjects;
 
   public StudentGroup(String number, List<Subject> subjects) {
     this.number = number;
@@ -30,9 +34,8 @@ public class StudentGroup {
     return this.number;
   }
 
-  public String setNumber(String newNumber) {
+  public void setNumber(String newNumber) {
     this.number = newNumber;
-    return this.number;
   }
 
   public List<Subject> getSubjects() {
@@ -46,5 +49,9 @@ public class StudentGroup {
   public List<Subject> addSubject(Subject subject) {
     this.subjects.add(subject);
     return this.subjects;
+  }
+
+  public void setSubjects(List<Subject> subjects) {
+    this.subjects = subjects;
   }
 }

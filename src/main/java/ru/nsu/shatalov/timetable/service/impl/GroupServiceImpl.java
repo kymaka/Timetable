@@ -24,13 +24,16 @@ public class GroupServiceImpl implements GroupService {
   }
 
   @Override
-  public StudentGroup getById(long id) {
+  public StudentGroup getById(Long id) {
     return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
   }
 
   @Override
-  public StudentGroup update(StudentGroup studentGroup) {
-    return null;
+  public StudentGroup update(StudentGroup newStudentGroup, Long id) {
+    StudentGroup studentGroup = getById(id);
+    studentGroup.setNumber(newStudentGroup.getNumber());
+    studentGroup.setSubjects(newStudentGroup.getSubjects());
+    return repository.save(studentGroup);
   }
 
   @Override

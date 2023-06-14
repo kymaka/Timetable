@@ -7,9 +7,9 @@ public interface GroupService {
 
   StudentGroup save(StudentGroup studentGroup);
 
-  StudentGroup getById(long id);
+  StudentGroup getById(Long id);
 
-  StudentGroup update(StudentGroup studentGroup);
+  StudentGroup update(StudentGroup studentGroup, Long id);
 
   List<StudentGroup> getAll();
 

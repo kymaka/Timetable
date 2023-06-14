@@ -29,7 +29,7 @@ public class TimetableGenerator {
     Day[] days = {Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday};
 
     int[] courseCapacities = {50, 20, 60, 40, 50};
-    int[] courseRoomTypes = {3, 1, 2, 3, 3};
+    int[] courseRoomTypes = {2, 0, 1, 2, 2};
     int[] roomNumbers = new int[numberOfRooms];
     int[] roomCapacities = new int[numberOfRooms];
     int[] roomTypes = new int[numberOfRooms];
