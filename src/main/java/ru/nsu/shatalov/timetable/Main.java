@@ -2,8 +2,10 @@ package ru.nsu.shatalov.timetable;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
-import ru.nsu.shatalov.timetable.model.object.Group;
+import ru.nsu.shatalov.timetable.model.object.StudentGroup;
 import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
@@ -11,21 +13,21 @@ import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
 import ru.nsu.shatalov.timetable.model.enums.SubjectType;
-import ru.nsu.shatalov.timetable.repository.GroupRepository;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
 import ru.nsu.shatalov.timetable.repository.SubjectRepository;
 import ru.nsu.shatalov.timetable.repository.TeacherRepository;
 import ru.nsu.shatalov.timetable.repository.TimeSlotRepository;
-import ru.nsu.shatalov.timetable.service.impl.GroupServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.RoomServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.SubjectServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.TeacherServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.TimeSlotServiceImpl;
 import ru.nsu.shatalov.timetable.store.DataStore;
 
+@SpringBootApplication
 public class Main {
 
   public static void main(String[] args) {
+    SpringApplication.run(Main.class, args);
     DataStore dataStore = new DataStore();
     SubjectRepository subjectRepository = new SubjectRepository(dataStore);
     SubjectServiceImpl subjectService = new SubjectServiceImpl(subjectRepository);
@@ -35,9 +37,6 @@ public class Main {
 
     TeacherRepository teacherRepository = new TeacherRepository(dataStore);
     TeacherServiceImpl teacherService = new TeacherServiceImpl(teacherRepository);
-
-    GroupRepository groupRepository = new GroupRepository(dataStore);
-    GroupServiceImpl groupService = new GroupServiceImpl(groupRepository);
 
     TimeSlotRepository timeSlotRepository = new TimeSlotRepository(dataStore);
     TimeSlotServiceImpl timeSlotService = new TimeSlotServiceImpl(timeSlotRepository);
@@ -69,22 +68,18 @@ public class Main {
       new Teacher("Maksim", List.of(subjects[4]), List.of(Day.Wednesday, Day.Friday))
     };
 
-    ArrayList<Group> groups =
+    ArrayList<StudentGroup> studentGroups =
         new ArrayList<>(
             List.of(
-                new Group("20213", List.of(subjects)),
-                new Group("20214", List.of(subjects)),
-                new Group("20215", List.of(subjects[0]))));
+                new StudentGroup("20213", List.of(subjects)),
+                new StudentGroup("20214", List.of(subjects)),
+                new StudentGroup("20215", List.of(subjects[0]))));
 
     ArrayList<TimeSlot> timeSlots =
         new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));
 
     for (TimeSlot timeSlot : timeSlots) {
       timeSlotService.addTimeSlot(timeSlot);
-    }
-
-    for (Group group : groups) {
-      groupService.addGroup(group);
     }
 
     for (Subject subject : subjects) {
@@ -103,7 +98,7 @@ public class Main {
         subjectService.getAllSubjects(),
         roomService.getAllRooms(),
         teacherService.getAllTeachers(),
-        groupService.getAllGroups(),
+        studentGroups,
         timeSlotService.getAllTimeSlots());
   }
 }

@@ -1,17 +1,17 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.Group;
+import ru.nsu.shatalov.timetable.model.object.StudentGroup;
 
 public interface GroupService {
 
-    void addGroup(Group group);
+  StudentGroup save(StudentGroup studentGroup);
 
-    Group getGroupById(int id);
+  StudentGroup getById(long id);
 
-    Group updateGroup(Group group);
+  StudentGroup update(StudentGroup studentGroup);
 
-    List<Group> getAllGroups();
+  List<StudentGroup> getAll();
 
-    void deleteGroup(Group group);
+  void delete(StudentGroup studentGroup);
 }

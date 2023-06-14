@@ -2,7 +2,7 @@ package ru.nsu.shatalov.timetable.store;
 
 import java.util.ArrayList;
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.Group;
+import ru.nsu.shatalov.timetable.model.object.StudentGroup;
 import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
@@ -15,7 +15,7 @@ public class DataStore {
 
   private final List<Teacher> teachers;
 
-  private final List<Group> groups;
+  private final List<StudentGroup> studentGroups;
 
   private final List<TimeSlot> timeSlots;
 
@@ -23,7 +23,7 @@ public class DataStore {
     this.subjects = new ArrayList<>();
     this.rooms = new ArrayList<>();
     this.teachers = new ArrayList<>();
-    this.groups = new ArrayList<>();
+    this.studentGroups = new ArrayList<>();
     this.timeSlots = new ArrayList<>();
   }
 
@@ -51,9 +51,9 @@ public class DataStore {
     return new ArrayList<>(teachers);
   }
 
-  public void addGroup(Group group) { groups.add(group); }
+  public void addGroup(StudentGroup studentGroup) { studentGroups.add(studentGroup); }
 
-  public List<Group> getAllGroups() { return new ArrayList<>(groups); }
+  public List<StudentGroup> getAllGroups() { return new ArrayList<>(studentGroups); }
 
   public void addTimeSlot(TimeSlot timeSlot) { timeSlots.add(timeSlot); }
 

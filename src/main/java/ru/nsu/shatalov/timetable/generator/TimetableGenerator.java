@@ -5,7 +5,7 @@ import java.util.List;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
-import ru.nsu.shatalov.timetable.model.object.Group;
+import ru.nsu.shatalov.timetable.model.object.StudentGroup;
 import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
@@ -18,13 +18,13 @@ public class TimetableGenerator {
       List<Subject> subjects,
       List<Room> rooms,
       List<Teacher> teachers,
-      List<Group> groups,
+      List<StudentGroup> studentGroups,
       List<TimeSlot> timeSlots) {
     int numberOfCourses = subjects.size();
     int numberOfRooms = rooms.size();
     int numberOfTeachers = teachers.size();
     int numberOfTimeSlots = timeSlots.size();
-    int numberOfGroups = groups.size();
+    int numberOfGroups = studentGroups.size();
 
     Day[] days = {Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday};
 
@@ -51,8 +51,8 @@ public class TimetableGenerator {
     // [g][i][0] - room, [g][i][1] - timeslot, [g][i][2] - teacher, [g][i][3] - day of week
     IntVar[][][] timetable = new IntVar[numberOfGroups][][];
     for (int g = 0; g < numberOfGroups; g++) {
-      Group currentGroup = groups.get(g);
-      List<Subject> groupSubjects = currentGroup.getSubjects();
+      StudentGroup currentStudentGroup = studentGroups.get(g);
+      List<Subject> groupSubjects = currentStudentGroup.getSubjects();
       int numberOfGroupSubjects = groupSubjects.size();
       timetable[g] = new IntVar[numberOfGroupSubjects][4];
 
@@ -69,15 +69,15 @@ public class TimetableGenerator {
 
     // Constraints
     for (int g = 0; g < numberOfGroups; g++) {
-      Group currentGroup = groups.get(g);
-      List<Subject> groupSubjects = currentGroup.getSubjects();
+      StudentGroup currentStudentGroup = studentGroups.get(g);
+      List<Subject> groupSubjects = currentStudentGroup.getSubjects();
       int numberOfGroupSubjects = groupSubjects.size();
 
       for (int g2 = 0; g2 < numberOfGroups; g2++) {
         if (g != g2) {
           for (int i = 0; i < numberOfGroupSubjects; i++) {
             for (int j = 0; j < numberOfGroupSubjects; j++) {
-              if (groups.get(g2).getSubjects().size() > j) {
+              if (studentGroups.get(g2).getSubjects().size() > j) {
                 model
                     .or(
                         model.arithm(timetable[g][i][3], "!=", timetable[g2][j][3]),
@@ -107,8 +107,8 @@ public class TimetableGenerator {
 
     for (int g = 0; g < numberOfGroups; g++) {
       for (int i = 0; i < numberOfCourses; i++) {
-        Group currentGroup = groups.get(g);
-        List<Subject> groupSubjects = currentGroup.getSubjects();
+        StudentGroup currentStudentGroup = studentGroups.get(g);
+        List<Subject> groupSubjects = currentStudentGroup.getSubjects();
         if (groupSubjects.contains(subjects.get(i))) {
           model.arithm(timetable[g][i][0], "<", numberOfRooms).post();
           model.arithm(timetable[g][i][1], "<", numberOfTimeSlots).post();
@@ -155,7 +155,7 @@ public class TimetableGenerator {
       for (int d = 0; d < days.length; d++) {
         for (int g = 0; g < numberOfGroups; g++) {
           for (int i = 0; i < numberOfCourses; i++) {
-            if (groups.get(g).getSubjects().size() > i && timetable[g][i][3].getValue() == d) {
+            if (studentGroups.get(g).getSubjects().size() > i && timetable[g][i][3].getValue() == d) {
               System.out.println(
                   "Day: "
                       + days[timetable[g][i][3].getValue()].name()
@@ -167,8 +167,8 @@ public class TimetableGenerator {
                       + timeSlots.get(timetable[g][i][1].getValue()).getTime()
                       + ",  Teacher: "
                       + teachers.get(timetable[g][i][2].getValue()).getName()
-                      + ", Group: "
-                      + groups.get(g).getNumber());
+                      + ", StudentGroup: "
+                      + studentGroups.get(g).getNumber());
             }
           }
         }

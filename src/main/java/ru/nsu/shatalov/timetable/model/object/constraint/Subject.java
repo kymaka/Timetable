@@ -1,28 +1,36 @@
 package ru.nsu.shatalov.timetable.model.object.constraint;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
 import ru.nsu.shatalov.timetable.model.enums.SubjectType;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
+@Entity
 public class Subject {
 
-  private static final AtomicInteger idCount = new AtomicInteger(0);
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-  private final int id;
+  private String name;
 
-  private final String name;
+  @Enumerated(EnumType.ORDINAL)
+  private RoomType roomType;
 
-  private final RoomType roomType;
-
-  private final SubjectType subjectType;
+  @Enumerated(EnumType.ORDINAL)
+  private SubjectType subjectType;
 
   public Subject(String name, RoomType roomType, SubjectType subjectType) {
     this.name = name;
     this.roomType = roomType;
     this.subjectType = subjectType;
-    this.id = idCount.getAndIncrement();
   }
+
+  public Subject() {}
 
   public String getName() {
     return this.name;
@@ -34,9 +42,5 @@ public class Subject {
 
   public SubjectType getSubjectType() {
     return this.subjectType;
-  }
-
-  public int getId() {
-    return id;
   }
 }

@@ -1,22 +1,8 @@
 package ru.nsu.shatalov.timetable.repository;
 
-import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.Group;
-import ru.nsu.shatalov.timetable.store.DataStore;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import ru.nsu.shatalov.timetable.model.object.StudentGroup;
 
-public class GroupRepository {
-
-    private final DataStore dataStore;
-
-    public GroupRepository(DataStore dataStore) {
-        this.dataStore = dataStore;
-    }
-
-    public void save(Group group) {
-        dataStore.addGroup(group);
-    }
-
-    public List<Group> getAll() {
-        return this.dataStore.getAllGroups();
-    }
-}
+@Repository
+public interface GroupRepository extends JpaRepository<StudentGroup, Long> {}

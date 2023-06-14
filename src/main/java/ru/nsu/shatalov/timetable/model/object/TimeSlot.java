@@ -1,12 +1,24 @@
 package ru.nsu.shatalov.timetable.model.object;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class TimeSlot {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
   private int time;
 
   public TimeSlot(int time) {
     this.time = time;
   }
+
+  public TimeSlot() {}
 
   @Override
   public boolean equals(Object obj) {
@@ -26,5 +38,10 @@ public class TimeSlot {
 
   public void setTime(int newTime) {
     this.time = newTime;
+  }
+
+  @Override
+  public String toString() {
+    return this.time / 100 + ":" + this.time % 100;
   }
 }
