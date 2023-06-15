@@ -5,20 +5,18 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
+import ru.nsu.shatalov.timetable.model.enums.Day;
+import ru.nsu.shatalov.timetable.model.enums.RoomType;
+import ru.nsu.shatalov.timetable.model.enums.SubjectType;
 import ru.nsu.shatalov.timetable.model.object.StudentGroup;
 import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
-import ru.nsu.shatalov.timetable.model.enums.Day;
-import ru.nsu.shatalov.timetable.model.enums.RoomType;
-import ru.nsu.shatalov.timetable.model.enums.SubjectType;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
-import ru.nsu.shatalov.timetable.repository.SubjectRepository;
 import ru.nsu.shatalov.timetable.repository.TeacherRepository;
 import ru.nsu.shatalov.timetable.repository.TimeSlotRepository;
 import ru.nsu.shatalov.timetable.service.impl.RoomServiceImpl;
-import ru.nsu.shatalov.timetable.service.impl.SubjectServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.TeacherServiceImpl;
 import ru.nsu.shatalov.timetable.service.impl.TimeSlotServiceImpl;
 import ru.nsu.shatalov.timetable.store.DataStore;
@@ -29,8 +27,6 @@ public class Main {
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
     DataStore dataStore = new DataStore();
-    SubjectRepository subjectRepository = new SubjectRepository(dataStore);
-    SubjectServiceImpl subjectService = new SubjectServiceImpl(subjectRepository);
 
     RoomRepository roomRepository = new RoomRepository(dataStore);
     RoomServiceImpl roomService = new RoomServiceImpl(roomRepository);
@@ -82,10 +78,6 @@ public class Main {
       timeSlotService.addTimeSlot(timeSlot);
     }
 
-    for (Subject subject : subjects) {
-      subjectService.addSubject(subject);
-    }
-
     for (Room room : rooms) {
       roomService.addRoom(room);
     }
@@ -95,7 +87,7 @@ public class Main {
     }
 
     generator.generate(
-        subjectService.getAllSubjects(),
+        List.of(subjects),
         roomService.getAllRooms(),
         teacherService.getAllTeachers(),
         studentGroups,
