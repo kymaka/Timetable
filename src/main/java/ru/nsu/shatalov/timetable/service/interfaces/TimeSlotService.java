@@ -5,7 +5,9 @@ import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 
 public interface TimeSlotService {
 
-  void addTimeSlot(TimeSlot timeSlot);
+  void save(TimeSlot timeSlot);
 
-  List<TimeSlot> getAllTimeSlots();
+  List<TimeSlot> getAll();
+
+  TimeSlot getById(Long id);
 }

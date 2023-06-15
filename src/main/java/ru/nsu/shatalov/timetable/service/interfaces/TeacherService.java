@@ -4,7 +4,9 @@ import java.util.List;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 
 public interface TeacherService {
-  void addTeacher(Teacher teacher);
+  void save(Teacher teacher);
 
-  List<Teacher> getAllTeachers();
+  List<Teacher> getAll();
+
+  Teacher getById(Long id);
 }

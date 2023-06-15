@@ -1,10 +1,12 @@
 package ru.nsu.shatalov.timetable.service.impl;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.RoomService;
 
+@Service
 public class RoomServiceImpl implements RoomService {
 
   private final RoomRepository repository;
@@ -14,25 +16,25 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Override
-  public void addRoom(Room room) {
+  public void save(Room room) {
     repository.save(room);
   }
 
   @Override
-  public Room getRoomById(int id) {
+  public Room getById(Long id) {
+    return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+  }
+
+  @Override
+  public Room update(Room room, Long id) {
     return null;
   }
 
   @Override
-  public Room updateRoom(Room room) {
-    return null;
+  public List<Room> getAll() {
+    return repository.findAll();
   }
 
   @Override
-  public List<Room> getAllRooms() {
-    return repository.getAllRooms();
-  }
-
-  @Override
-  public void deleteRoom(int id) {}
+  public void delete(Long id) {}
 }

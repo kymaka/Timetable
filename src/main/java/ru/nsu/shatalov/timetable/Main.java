@@ -13,29 +13,12 @@ import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
-import ru.nsu.shatalov.timetable.repository.RoomRepository;
-import ru.nsu.shatalov.timetable.repository.TeacherRepository;
-import ru.nsu.shatalov.timetable.repository.TimeSlotRepository;
-import ru.nsu.shatalov.timetable.service.impl.RoomServiceImpl;
-import ru.nsu.shatalov.timetable.service.impl.TeacherServiceImpl;
-import ru.nsu.shatalov.timetable.service.impl.TimeSlotServiceImpl;
-import ru.nsu.shatalov.timetable.store.DataStore;
 
 @SpringBootApplication
 public class Main {
 
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
-    DataStore dataStore = new DataStore();
-
-    RoomRepository roomRepository = new RoomRepository(dataStore);
-    RoomServiceImpl roomService = new RoomServiceImpl(roomRepository);
-
-    TeacherRepository teacherRepository = new TeacherRepository(dataStore);
-    TeacherServiceImpl teacherService = new TeacherServiceImpl(teacherRepository);
-
-    TimeSlotRepository timeSlotRepository = new TimeSlotRepository(dataStore);
-    TimeSlotServiceImpl timeSlotService = new TimeSlotServiceImpl(timeSlotRepository);
 
     TimetableGenerator generator = new TimetableGenerator();
 
@@ -74,23 +57,7 @@ public class Main {
     ArrayList<TimeSlot> timeSlots =
         new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));
 
-    for (TimeSlot timeSlot : timeSlots) {
-      timeSlotService.addTimeSlot(timeSlot);
-    }
-
-    for (Room room : rooms) {
-      roomService.addRoom(room);
-    }
-
-    for (Teacher teacher : teachers) {
-      teacherService.addTeacher(teacher);
-    }
-
     generator.generate(
-        List.of(subjects),
-        roomService.getAllRooms(),
-        teacherService.getAllTeachers(),
-        studentGroups,
-        timeSlotService.getAllTimeSlots());
+        List.of(subjects), List.of(rooms), List.of(teachers), studentGroups, timeSlots);
   }
 }

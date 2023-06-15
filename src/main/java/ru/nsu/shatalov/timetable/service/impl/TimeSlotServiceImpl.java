@@ -1,10 +1,12 @@
 package ru.nsu.shatalov.timetable.service.impl;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 import ru.nsu.shatalov.timetable.model.object.TimeSlot;
 import ru.nsu.shatalov.timetable.repository.TimeSlotRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.TimeSlotService;
 
+@Service
 public class TimeSlotServiceImpl implements TimeSlotService {
 
   private final TimeSlotRepository repository;
@@ -14,12 +16,17 @@ public class TimeSlotServiceImpl implements TimeSlotService {
   }
 
   @Override
-  public void addTimeSlot(TimeSlot timeSlot) {
+  public void save(TimeSlot timeSlot) {
     repository.save(timeSlot);
   }
 
   @Override
-  public List<TimeSlot> getAllTimeSlots() {
-    return repository.getAll();
+  public List<TimeSlot> getAll() {
+    return repository.findAll();
+  }
+
+  @Override
+  public TimeSlot getById(Long id) {
+    return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
   }
 }

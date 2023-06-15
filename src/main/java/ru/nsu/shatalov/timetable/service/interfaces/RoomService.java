@@ -5,13 +5,13 @@ import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 
 public interface RoomService {
 
-  void addRoom(Room room);
+  void save(Room room);
 
-  Room getRoomById(int id);
+  Room getById(Long id);
 
-  Room updateRoom(Room room);
+  Room update(Room room, Long id);
 
-  List<Room> getAllRooms();
+  List<Room> getAll();
 
-  void deleteRoom(int id);
+  void delete(Long id);
 }
