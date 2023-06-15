@@ -3,7 +3,7 @@ package ru.nsu.shatalov.timetable.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.nsu.shatalov.timetable.model.object.StudentGroup;
+import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
 import ru.nsu.shatalov.timetable.repository.GroupRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.GroupService;
 

@@ -1,7 +1,7 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.StudentGroup;
+import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
 
 public interface GroupService {
 

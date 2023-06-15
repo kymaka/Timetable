@@ -1,4 +1,4 @@
-package ru.nsu.shatalov.timetable.model.object;
+package ru.nsu.shatalov.timetable.model.object.constraint;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

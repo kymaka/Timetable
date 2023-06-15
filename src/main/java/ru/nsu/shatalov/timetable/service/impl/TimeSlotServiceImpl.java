@@ -2,7 +2,7 @@ package ru.nsu.shatalov.timetable.service.impl;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import ru.nsu.shatalov.timetable.model.object.TimeSlot;
+import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
 import ru.nsu.shatalov.timetable.repository.TimeSlotRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.TimeSlotService;
 
