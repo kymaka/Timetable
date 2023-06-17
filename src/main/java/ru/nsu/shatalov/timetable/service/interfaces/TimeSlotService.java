@@ -5,7 +5,7 @@ import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
 
 public interface TimeSlotService {
 
-  void save(TimeSlot timeSlot);
+  TimeSlot save(TimeSlot timeSlot);
 
   List<TimeSlot> getAll();
 

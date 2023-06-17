@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
@@ -28,5 +30,11 @@ public class TimeSlotController {
   @GetMapping("/all")
   public ResponseEntity<List<TimeSlot>> getAllTimeSlots() {
     return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+  }
+
+  @PostMapping
+  public ResponseEntity<TimeSlot> saveTimeSlot(@RequestBody TimeSlot timeSlot) {
+    TimeSlot newTimeSlot = service.save(new TimeSlot(timeSlot.getTime()));
+    return new ResponseEntity<>(newTimeSlot, HttpStatus.CREATED);
   }
 }

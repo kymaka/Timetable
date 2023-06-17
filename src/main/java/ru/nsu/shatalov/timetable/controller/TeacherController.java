@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
@@ -28,5 +30,13 @@ public class TeacherController {
   @GetMapping("/all")
   public ResponseEntity<List<Teacher>> getAllTeachers() {
     return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+  }
+
+  @PostMapping
+  public ResponseEntity<Teacher> saveTeacher(@RequestBody Teacher teacher) {
+    Teacher newTeacher =
+        service.save(
+            new Teacher(teacher.getName(), teacher.getSubjects(), teacher.getWorkingDays()));
+    return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
   }
 }

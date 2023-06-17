@@ -16,8 +16,8 @@ public class TeacherServiceImpl implements TeacherService {
   }
 
   @Override
-  public void save(Teacher teacher) {
-    repository.save(teacher);
+  public Teacher save(Teacher teacher) {
+    return repository.save(teacher);
   }
 
   @Override

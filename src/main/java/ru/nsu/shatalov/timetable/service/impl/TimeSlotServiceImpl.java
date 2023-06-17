@@ -16,8 +16,8 @@ public class TimeSlotServiceImpl implements TimeSlotService {
   }
 
   @Override
-  public void save(TimeSlot timeSlot) {
-    repository.save(timeSlot);
+  public TimeSlot save(TimeSlot timeSlot) {
+    return repository.save(timeSlot);
   }
 
   @Override

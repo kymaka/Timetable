@@ -20,7 +20,7 @@ public class Main {
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
 
-    TimetableGenerator generator = new TimetableGenerator();
+/*    TimetableGenerator generator = new TimetableGenerator();
 
     Subject[] subjects = {
       new Subject("Math", RoomType.Lecture, SubjectType.Lecture),
@@ -55,9 +55,6 @@ public class Main {
                 new StudentGroup("20215", List.of(subjects[0]))));
 
     ArrayList<TimeSlot> timeSlots =
-        new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));
-
-    generator.generate(
-        List.of(subjects), List.of(rooms), List.of(teachers), studentGroups, timeSlots);
+        new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));*/
   }
 }

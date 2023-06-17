@@ -5,7 +5,7 @@ import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 
 public interface RoomService {
 
-  void save(Room room);
+  Room save(Room room);
 
   Room getById(Long id);
 

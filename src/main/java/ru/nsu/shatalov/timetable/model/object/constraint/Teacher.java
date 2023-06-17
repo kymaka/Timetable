@@ -45,4 +45,12 @@ public class Teacher {
   public List<Subject> getSubjects() {
     return subjects;
   }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 }
