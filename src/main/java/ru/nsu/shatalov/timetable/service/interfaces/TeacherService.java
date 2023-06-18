@@ -1,12 +1,13 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
+import ru.nsu.shatalov.timetable.dto.TeacherDTO;
 import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 
 public interface TeacherService {
-  Teacher save(Teacher teacher);
+  TeacherDTO save(TeacherDTO teacher);
 
-  List<Teacher> getAll();
+  List<TeacherDTO> getAll();
 
-  Teacher getById(Long id);
+  TeacherDTO getById(Long id);
 }

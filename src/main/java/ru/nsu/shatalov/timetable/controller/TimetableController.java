@@ -1,7 +1,6 @@
 package ru.nsu.shatalov.timetable.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.shatalov.timetable.service.impl.TimetableServiceImpl;
 

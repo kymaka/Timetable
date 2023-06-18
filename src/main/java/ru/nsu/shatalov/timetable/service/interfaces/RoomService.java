@@ -1,17 +1,17 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.constraint.Room;
+import ru.nsu.shatalov.timetable.dto.RoomDTO;
 
 public interface RoomService {
 
-  Room save(Room room);
+  RoomDTO save(RoomDTO room);
 
-  Room getById(Long id);
+  RoomDTO getById(Long id);
 
-  Room update(Room room, Long id);
+  RoomDTO update(RoomDTO room, Long id);
 
-  List<Room> getAll();
+  List<RoomDTO> getAll();
 
   void delete(Long id);
 }

@@ -20,7 +20,7 @@ public class Main {
   public static void main(String[] args) {
     SpringApplication.run(Main.class, args);
 
-/*    TimetableGenerator generator = new TimetableGenerator();
+    /*    TimetableGenerator generator = new TimetableGenerator();
 
     Subject[] subjects = {
       new Subject("Math", RoomType.Lecture, SubjectType.Lecture),

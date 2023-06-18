@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
+import ru.nsu.shatalov.timetable.dto.StudentGroupDTO;
 import ru.nsu.shatalov.timetable.service.impl.GroupServiceImpl;
 
 @RestController
@@ -24,27 +24,35 @@ public class GroupController {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<List<StudentGroup>> getAllGroups() {
+  public ResponseEntity<List<StudentGroupDTO>> getAllGroups() {
     return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<StudentGroup> getGroup(@PathVariable Long id) {
-    StudentGroup studentGroup = service.getById(id);
-    return new ResponseEntity<>(studentGroup, HttpStatus.OK);
+  public ResponseEntity<StudentGroupDTO> getGroup(@PathVariable Long id) {
+    StudentGroupDTO studentGroup = service.getById(id);
+    if (studentGroup != null) {
+      return new ResponseEntity<>(studentGroup, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
   }
 
   @PostMapping
-  public ResponseEntity<StudentGroup> createGroup(@RequestBody StudentGroup studentGroup) {
-    StudentGroup newStudentGroup =
-        service.save(new StudentGroup(studentGroup.getNumber(), studentGroup.getSubjects()));
-    return new ResponseEntity<>(newStudentGroup, HttpStatus.CREATED);
+  public ResponseEntity<StudentGroupDTO> createGroup(@RequestBody StudentGroupDTO studentGroup) {
+    if (studentGroup != null) {
+      StudentGroupDTO newStudentGroup = service.save(studentGroup);
+      return new ResponseEntity<>(newStudentGroup, HttpStatus.CREATED);
+    }
+    return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<StudentGroup> updateGroup(
-      @RequestBody StudentGroup newStudentGroup, @PathVariable("id") Long id) {
-    StudentGroup updatedStudentGroup = service.update(newStudentGroup, id);
-    return new ResponseEntity<>(updatedStudentGroup, HttpStatus.CREATED);
+  public ResponseEntity<StudentGroupDTO> updateGroup(
+      @RequestBody StudentGroupDTO newStudentGroup, @PathVariable("id") Long id) {
+    StudentGroupDTO updatedStudentGroup = service.update(newStudentGroup, id);
+    if (newStudentGroup != null) {
+      return new ResponseEntity<>(updatedStudentGroup, HttpStatus.CREATED);
+    }
+    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
   }
 }

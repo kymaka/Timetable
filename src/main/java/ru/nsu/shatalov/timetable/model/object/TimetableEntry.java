@@ -77,7 +77,7 @@ public class TimetableEntry {
     return day;
   }
 
-  public void setDayOfWeek(Day day) {
+  public void setDay(Day day) {
     this.day = day;
   }
 

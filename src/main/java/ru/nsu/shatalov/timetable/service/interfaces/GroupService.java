@@ -1,17 +1,17 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
+import ru.nsu.shatalov.timetable.dto.StudentGroupDTO;
 
 public interface GroupService {
 
-  StudentGroup save(StudentGroup studentGroup);
+  StudentGroupDTO save(StudentGroupDTO studentGroupDTO);
 
-  StudentGroup getById(Long id);
+  StudentGroupDTO getById(Long id);
 
-  StudentGroup update(StudentGroup studentGroup, Long id);
+  StudentGroupDTO update(StudentGroupDTO studentGroupDTO, Long id);
 
-  List<StudentGroup> getAll();
+  List<StudentGroupDTO> getAll();
 
-  void delete(StudentGroup studentGroup);
+  void delete(StudentGroupDTO studentGroupDTO);
 }

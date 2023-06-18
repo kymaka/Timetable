@@ -46,6 +46,18 @@ public class Teacher {
     return subjects;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setSubjects(List<Subject> subjects) {
+    this.subjects = subjects;
+  }
+
+  public void setWorkingDays(List<Day> workingDays) {
+    this.workingDays = workingDays;
+  }
+
   public long getId() {
     return id;
   }

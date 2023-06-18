@@ -1,13 +1,13 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
+import ru.nsu.shatalov.timetable.dto.TimeSlotDTO;
 
 public interface TimeSlotService {
 
-  TimeSlot save(TimeSlot timeSlot);
+  TimeSlotDTO save(TimeSlotDTO timeSlot);
 
-  List<TimeSlot> getAll();
+  List<TimeSlotDTO> getAll();
 
-  TimeSlot getById(Long id);
+  TimeSlotDTO getById(Long id);
 }

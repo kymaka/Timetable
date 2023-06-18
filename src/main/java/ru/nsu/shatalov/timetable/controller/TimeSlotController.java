@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
+import ru.nsu.shatalov.timetable.dto.TimeSlotDTO;
 import ru.nsu.shatalov.timetable.service.interfaces.TimeSlotService;
 
 @RestController
@@ -23,18 +23,22 @@ public class TimeSlotController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<TimeSlot> getTimeSlot(@PathVariable Long id) {
-    return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+  public ResponseEntity<TimeSlotDTO> getTimeSlot(@PathVariable Long id) {
+    TimeSlotDTO timeSlot = service.getById(id);
+    if (timeSlot != null) {
+      return new ResponseEntity<>(timeSlot, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
   }
 
   @GetMapping("/all")
-  public ResponseEntity<List<TimeSlot>> getAllTimeSlots() {
+  public ResponseEntity<List<TimeSlotDTO>> getAllTimeSlots() {
     return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
   }
 
   @PostMapping
-  public ResponseEntity<TimeSlot> saveTimeSlot(@RequestBody TimeSlot timeSlot) {
-    TimeSlot newTimeSlot = service.save(new TimeSlot(timeSlot.getTime()));
+  public ResponseEntity<TimeSlotDTO> saveTimeSlot(@RequestBody TimeSlotDTO timeSlot) {
+    TimeSlotDTO newTimeSlot = service.save(timeSlot);
     return new ResponseEntity<>(newTimeSlot, HttpStatus.CREATED);
   }
 }

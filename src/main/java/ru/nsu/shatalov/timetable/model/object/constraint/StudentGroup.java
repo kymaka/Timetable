@@ -7,11 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
 
 @Entity

@@ -1,16 +1,16 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
+import ru.nsu.shatalov.timetable.dto.SubjectDTO;
 
 public interface SubjectService {
-  void save(Subject subject);
+  SubjectDTO save(SubjectDTO subject);
 
-  Subject getById(Long id);
+  SubjectDTO getById(Long id);
 
-  Subject update(Subject subject, Long id);
+  SubjectDTO update(SubjectDTO subject, Long id);
 
-  List<Subject> getAll();
+  List<SubjectDTO> getAll();
 
   void delete(Long id);
 }

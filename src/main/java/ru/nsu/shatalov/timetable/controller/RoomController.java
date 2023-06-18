@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.shatalov.timetable.model.object.constraint.Room;
+import ru.nsu.shatalov.timetable.dto.RoomDTO;
 import ru.nsu.shatalov.timetable.service.interfaces.RoomService;
 
 @RestController
@@ -23,18 +23,22 @@ public class RoomController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Room> getRoom(@PathVariable Long id) {
-    return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+  public ResponseEntity<RoomDTO> getRoom(@PathVariable Long id) {
+    RoomDTO room = service.getById(id);
+    if (room != null) {
+      return new ResponseEntity<>(room, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
   }
 
   @GetMapping("/all")
-  public ResponseEntity<List<Room>> getAllRooms() {
+  public ResponseEntity<List<RoomDTO>> getAllRooms() {
     return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
   }
 
   @PostMapping
-  public ResponseEntity<Room> saveRoom(@RequestBody Room room) {
-    Room newRoom = service.save(new Room(room.getNumber(), room.getType()));
+  public ResponseEntity<RoomDTO> saveRoom(@RequestBody RoomDTO room) {
+    RoomDTO newRoom = service.save(room);
     return new ResponseEntity<>(newRoom, HttpStatus.CREATED);
   }
 }
