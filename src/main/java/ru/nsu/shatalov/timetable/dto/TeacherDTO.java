@@ -4,6 +4,9 @@ import java.util.List;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 
 public class TeacherDTO {
+
+  private Long id;
+
   private String name;
 
   private List<SubjectDTO> subjects;
@@ -40,5 +43,13 @@ public class TeacherDTO {
 
   public void setWorkingDays(List<Day> workingDays) {
     this.workingDays = workingDays;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }

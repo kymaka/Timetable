@@ -4,6 +4,8 @@ import ru.nsu.shatalov.timetable.model.enums.Day;
 
 public class TimetableEntryDTO {
 
+  private Long id;
+
   private RoomDTO room;
 
   private SubjectDTO subject;
@@ -63,5 +65,13 @@ public class TimetableEntryDTO {
 
   public void setDay(Day day) {
     this.day = day;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }

@@ -4,6 +4,8 @@ import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
 
 public class TimeSlotDTO {
 
+  private Long id;
+
   private int time;
 
   public TimeSlotDTO(int time) {
@@ -35,5 +37,13 @@ public class TimeSlotDTO {
   @Override
   public String toString() {
     return this.time / 100 + ":" + this.time % 100;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }

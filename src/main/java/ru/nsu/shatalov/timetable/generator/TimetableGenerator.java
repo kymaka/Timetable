@@ -5,21 +5,17 @@ import java.util.List;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
-import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
-import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
-import ru.nsu.shatalov.timetable.model.object.constraint.Room;
-import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
+import ru.nsu.shatalov.timetable.dto.*;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 
 public class TimetableGenerator {
 
   public int[][][] generate(
-      List<Subject> subjects,
-      List<Room> rooms,
-      List<Teacher> teachers,
-      List<StudentGroup> studentGroups,
-      List<TimeSlot> timeSlots) {
+      List<SubjectDTO> subjects,
+      List<RoomDTO> rooms,
+      List<TeacherDTO> teachers,
+      List<StudentGroupDTO> studentGroups,
+      List<TimeSlotDTO> timeSlots) {
     int numberOfRooms = rooms.size();
     int numberOfTeachers = teachers.size();
     int numberOfTimeSlots = timeSlots.size();
@@ -48,8 +44,8 @@ public class TimetableGenerator {
     // [g][i][0] - room, [g][i][1] - timeslot, [g][i][2] - teacher, [g][i][3] - day of week
     IntVar[][][] timetable = new IntVar[numberOfGroups][][];
     for (int g = 0; g < numberOfGroups; g++) {
-      StudentGroup currentStudentGroup = studentGroups.get(g);
-      List<Subject> groupSubjects = currentStudentGroup.getSubjects();
+      StudentGroupDTO currentStudentGroup = studentGroups.get(g);
+      List<SubjectDTO> groupSubjects = currentStudentGroup.getSubjects();
       int numberOfGroupSubjects = groupSubjects.size();
       timetable[g] = new IntVar[numberOfGroupSubjects][4];
 
@@ -66,8 +62,8 @@ public class TimetableGenerator {
 
     // Constraints
     for (int g = 0; g < numberOfGroups; g++) {
-      StudentGroup currentStudentGroup = studentGroups.get(g);
-      List<Subject> groupSubjects = currentStudentGroup.getSubjects();
+      StudentGroupDTO currentStudentGroup = studentGroups.get(g);
+      List<SubjectDTO> groupSubjects = currentStudentGroup.getSubjects();
       int numberOfGroupSubjects = groupSubjects.size();
 
       for (int g2 = 0; g2 < numberOfGroups; g2++) {
@@ -103,8 +99,8 @@ public class TimetableGenerator {
     }
 
     for (int g = 0; g < numberOfGroups; g++) {
-      StudentGroup currentStudentGroup = studentGroups.get(g);
-      List<Subject> groupSubjects = currentStudentGroup.getSubjects();
+      StudentGroupDTO currentStudentGroup = studentGroups.get(g);
+      List<SubjectDTO> groupSubjects = currentStudentGroup.getSubjects();
       for (int i = 0; i < groupSubjects.size(); i++) {
 
         model.arithm(timetable[g][i][0], "<", numberOfRooms).post();
@@ -129,7 +125,7 @@ public class TimetableGenerator {
         model.element(teacherVar, teacherArray, timetable[g][i][2]).post();
 
         for (int t = 0; t < numberOfTeachers; t++) {
-          Teacher teacher = teachers.get(t);
+          TeacherDTO teacher = teachers.get(t);
           // Convert the working days of the teacher to their corresponding indices in the days
           // - > array
           int[] workingDays =

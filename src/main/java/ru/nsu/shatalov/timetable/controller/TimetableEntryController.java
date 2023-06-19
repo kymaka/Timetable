@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
+import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
 import ru.nsu.shatalov.timetable.service.interfaces.TimetableEntryService;
 
 @RestController
@@ -20,7 +20,7 @@ public class TimetableEntryController {
   }
 
   @GetMapping
-  public ResponseEntity<List<TimetableEntry>> getAllTimetableEntries() {
+  public ResponseEntity<List<TimetableEntryDTO>> getAllTimetableEntries() {
     return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
   }
 }

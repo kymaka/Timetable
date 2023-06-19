@@ -1,15 +1,15 @@
 package ru.nsu.shatalov.timetable.service.interfaces;
 
 import java.util.List;
-import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
+import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
 
 public interface TimetableEntryService {
 
-  void save(TimetableEntry timetableEntry);
+  TimetableEntryDTO save(TimetableEntryDTO timetableEntry);
 
-  TimetableEntry getById(Long id);
+  TimetableEntryDTO getById(Long id);
 
-  List<TimetableEntry> getAll();
+  List<TimetableEntryDTO> getAll();
 
   void delete(Long id);
 }

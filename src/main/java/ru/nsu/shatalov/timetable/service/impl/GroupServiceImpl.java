@@ -48,6 +48,7 @@ public class GroupServiceImpl implements GroupService {
       StudentGroup newStudentGroup = modelMapper.map(newStudentGroupDTO, StudentGroup.class);
       studentGroup.setNumber(newStudentGroup.getNumber());
       studentGroup.setSubjects(newStudentGroup.getSubjects());
+      studentGroup.setTimetableEntries(newStudentGroup.getTimetableEntries());
       repository.save(studentGroup);
       return modelMapper.map(studentGroup, StudentGroupDTO.class);
     }

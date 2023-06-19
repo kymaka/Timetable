@@ -5,6 +5,8 @@ import ru.nsu.shatalov.timetable.model.enums.SubjectType;
 
 public class SubjectDTO {
 
+  private Long id;
+
   private String name;
 
   private RoomType roomType;
@@ -41,5 +43,13 @@ public class SubjectDTO {
 
   public void setSubjectType(SubjectType subjectType) {
     this.subjectType = subjectType;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }

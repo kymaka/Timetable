@@ -4,6 +4,8 @@ import java.util.List;
 
 public class StudentGroupDTO {
 
+  private Long id;
+
   private String number;
   private List<SubjectDTO> subjects;
   private List<TimetableEntryDTO> timetableEntries;
@@ -41,5 +43,13 @@ public class StudentGroupDTO {
 
   public void setTimetableEntries(List<TimetableEntryDTO> timetableEntries) {
     this.timetableEntries = timetableEntries;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }
