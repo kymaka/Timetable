@@ -2,6 +2,8 @@ package ru.nsu.shatalov.timetable.generator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.variables.IntVar;
@@ -134,7 +136,8 @@ public class TimetableGenerator {
                   .toArray();
 
           for (int s = 0; s < teacher.getSubjects().size(); s++) {
-            if (teacher.getSubjects().get(s).equals(groupSubjects.get(i))) {
+            if (Objects.equals(
+                teacher.getSubjects().get(s).getId(), groupSubjects.get(i).getId())) {
               model.arithm(teacherVar, "=", t).post();
               model.member(timetable[g][i][3], workingDays).post();
             }
