@@ -34,7 +34,7 @@ target/
 .idea/libraries/
 .idea/**/**.xml
 .idea/*.xml
-.idea/
+**/.idea/
 *.iws
 *.iml
 *.ipr
@@ -59,7 +59,9 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+**/.vscode/
 
 ### Mac OS ###
 .DS_Store
+
+**/node_modules/
