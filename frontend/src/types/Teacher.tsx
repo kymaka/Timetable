@@ -4,7 +4,7 @@ import { Day } from '../enums/Day';
 interface Teacher {
   id: number;
   name: string;
-  subject: Subject[];
+  subjects: Subject[];
   workingDays: Day[];
 }
 
