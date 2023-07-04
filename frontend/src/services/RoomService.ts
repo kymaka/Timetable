@@ -2,7 +2,7 @@ import http from '../http-common';
 import Room from '../types/Room';
 
 const getAll = () => {
-  return http.get<Array<Room>>('/rooms');
+  return http.get<Array<Room>>('/rooms/all');
 };
 
 const get = (id: number) => {

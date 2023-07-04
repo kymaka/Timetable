@@ -5,16 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import StudentGroupComponent from './components/StudentGroupComponent';
 import RoomComponent from './components/RoomComponent';
 import { RoomType } from './enums/RoomType';
+import DataPage from './pages/DataPage';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Rooms</h1>
-        <RoomComponent id={0} number={''} type={RoomType.Terminal} />
-        <h1>Groups</h1>
-        <StudentGroupComponent id={0} number={''} subjects={[]} timetableEntries={[]} />
+        <DataPage />
       </header>
     </div>
   );

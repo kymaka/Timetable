@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
@@ -56,5 +59,15 @@ public class Main {
 
     ArrayList<TimeSlot> timeSlots =
         new ArrayList<>(List.of(new TimeSlot(900), new TimeSlot(1050), new TimeSlot(1240)));*/
+  }
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+      }
+    };
   }
 }
