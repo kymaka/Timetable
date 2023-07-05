@@ -1,5 +1,5 @@
 import React from "react";
-import Subject from "../types/Subject";
+import Subject from "../../types/Subject";
 
 const SubjectComponent: React.FC<Subject> = ({ name, roomType, subjectType }) => {
   return (

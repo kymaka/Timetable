@@ -1,5 +1,5 @@
 import React from "react";
-import TimeSlot from "../types/TimeSlot";
+import TimeSlot from "../../types/TimeSlot";
 
 const TimeSlotComponent: React.FC<TimeSlot> = ({ time }) => {
   return (

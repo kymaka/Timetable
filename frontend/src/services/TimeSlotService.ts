@@ -2,7 +2,7 @@ import http from '../http-common';
 import TimeSlot from '../types/TimeSlot';
 
 const getAll = () => {
-  return http.get<Array<TimeSlot>>('/timeslots');
+  return http.get<Array<TimeSlot>>('/timeslots/all');
 };
 
 const get = (id: number) => {

@@ -2,7 +2,7 @@ import http from '../http-common';
 import Subject from '../types/Subject';
 
 const getAll = () => {
-  return http.get<Array<Subject>>('/subjects');
+  return http.get<Array<Subject>>('/subjects/all');
 };
 
 const get = (id: number) => {

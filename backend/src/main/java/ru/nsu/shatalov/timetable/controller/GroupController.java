@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.shatalov.timetable.dto.StudentGroupDTO;
+import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
 import ru.nsu.shatalov.timetable.service.impl.GroupServiceImpl;
 
 @RestController
@@ -35,6 +36,20 @@ public class GroupController {
       return new ResponseEntity<>(studentGroup, HttpStatus.OK);
     }
     return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+  }
+
+  @GetMapping("/number/{number}")
+  public ResponseEntity<StudentGroupDTO> getGroup(@PathVariable String number) {
+    StudentGroupDTO studentGroup = service.getByNumber(number);
+    if (studentGroup != null) {
+      return new ResponseEntity<>(studentGroup, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+  }
+
+  @GetMapping("/timetable/{number}")
+  public ResponseEntity<List<TimetableEntryDTO>> getGroupTimetable(@PathVariable String number) {
+    return new ResponseEntity<>(service.getTimetable(number), HttpStatus.OK);
   }
 
   @PostMapping

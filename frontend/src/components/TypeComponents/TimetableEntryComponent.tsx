@@ -1,5 +1,5 @@
 import React from "react";
-import TimetableEntry from "../types/TimetableEntry";
+import TimetableEntry from "../../types/TimetableEntry";
 
 const TimetableEntryComponent: React.FC<TimetableEntry> = ({ room, subject, timeSlot, teacher, day }) => {
   return (

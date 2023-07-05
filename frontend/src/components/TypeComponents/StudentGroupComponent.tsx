@@ -1,5 +1,5 @@
 import React from 'react'
-import StudentGroup from '../types/StudentGroup'
+import StudentGroup from '../../types/StudentGroup'
 
 const StudentGroupComponent: React.FC<StudentGroup> =({ number, subjects, timetableEntries }) => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import Room from '../types/Room'
+import Room from '../../types/Room'
 
 const RoomComponent: React.FC<Room> = ({ number, type }) => {
   return (

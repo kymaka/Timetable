@@ -2,7 +2,7 @@ import http from '../http-common';
 import Teacher from '../types/Teacher';
 
 const getAll = () => {
-  return http.get<Array<Teacher>>('/teachers');
+  return http.get<Array<Teacher>>('/teachers/all');
 };
 
 const get = (id: number) => {

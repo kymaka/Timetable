@@ -14,4 +14,15 @@ interface TimetableEntry {
   day: Day;
 }
 
+export function isTimetableEntry(obj: any): obj is TimetableEntry {
+  let res;
+  try {
+    res = 'id' in obj && 'room' in obj && 'subject' in obj && 'timeSlot' in obj
+      && 'teacher' in obj && 'day' in obj;
+  } catch (error) {
+    res = false
+  }
+  return res
+}
+
 export default TimetableEntry;

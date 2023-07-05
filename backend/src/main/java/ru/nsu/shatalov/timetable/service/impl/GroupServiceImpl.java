@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.shatalov.timetable.dto.StudentGroupDTO;
+import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
+import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
 import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
 import ru.nsu.shatalov.timetable.repository.GroupRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.GroupService;
@@ -38,6 +40,24 @@ public class GroupServiceImpl implements GroupService {
       return modelMapper.map(studentGroup, StudentGroupDTO.class);
     }
     return null;
+  }
+
+  @Override
+  public StudentGroupDTO getByNumber(String number) {
+    StudentGroup studentGroup =
+        repository.findStudentGroupByNumber(number).isPresent()
+            ? repository.findStudentGroupByNumber(number).get()
+            : null;
+    if (studentGroup != null) {
+      return modelMapper.map(studentGroup, StudentGroupDTO.class);
+    }
+    return null;
+  }
+
+  @Override
+  public List<TimetableEntryDTO> getTimetable(String number) {
+    StudentGroupDTO studentGroupDTO = getByNumber(number);
+    return studentGroupDTO.getTimetableEntries();
   }
 
   @Override

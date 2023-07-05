@@ -1,5 +1,5 @@
 import React from "react";
-import Teacher from "../types/Teacher";
+import Teacher from "../../types/Teacher";
 
 const TeacherComponent: React.FC<Teacher> = ({ name, subjects, workingDays }) => {
   return (
