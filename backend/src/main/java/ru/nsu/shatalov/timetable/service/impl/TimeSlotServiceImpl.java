@@ -45,4 +45,12 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     }
     return null;
   }
+
+  @Override
+  public void delete(Long id) {
+    TimeSlot timeSlot = repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+    if (timeSlot != null) {
+      repository.delete(timeSlot);
+    }
+  }
 }

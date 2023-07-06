@@ -45,4 +45,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
     return null;
   }
+
+  @Override
+  public void delete(Long id) {
+    Teacher teacher = repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+    if (teacher != null) {
+      repository.delete(teacher);
+    }
+  }
 }

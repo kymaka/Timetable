@@ -1,21 +1,10 @@
 package ru.nsu.shatalov.timetable;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.nsu.shatalov.timetable.generator.TimetableGenerator;
-import ru.nsu.shatalov.timetable.model.enums.Day;
-import ru.nsu.shatalov.timetable.model.enums.RoomType;
-import ru.nsu.shatalov.timetable.model.enums.SubjectType;
-import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
-import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
-import ru.nsu.shatalov.timetable.model.object.constraint.Room;
-import ru.nsu.shatalov.timetable.model.object.constraint.Subject;
-import ru.nsu.shatalov.timetable.model.object.constraint.Teacher;
 
 @SpringBootApplication
 public class Main {

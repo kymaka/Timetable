@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.shatalov.timetable.dto.StudentGroupDTO;
 import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
-import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
 import ru.nsu.shatalov.timetable.model.object.constraint.StudentGroup;
 import ru.nsu.shatalov.timetable.repository.GroupRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.GroupService;
@@ -86,8 +85,11 @@ public class GroupServiceImpl implements GroupService {
   }
 
   @Override
-  public void delete(StudentGroupDTO studentGroupDTO) {
-    StudentGroup studentGroup = modelMapper.map(studentGroupDTO, StudentGroup.class);
-    repository.delete(studentGroup);
+  public void delete(Long id) {
+    StudentGroup studentGroup =
+        repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+    if (studentGroup != null) {
+      repository.delete(studentGroup);
+    }
   }
 }

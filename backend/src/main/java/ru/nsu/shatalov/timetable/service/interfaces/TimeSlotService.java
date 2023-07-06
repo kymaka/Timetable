@@ -10,4 +10,6 @@ public interface TimeSlotService {
   List<TimeSlotDTO> getAll();
 
   TimeSlotDTO getById(Long id);
+
+  void delete(Long id);
 }

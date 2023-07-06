@@ -3,13 +3,7 @@ package ru.nsu.shatalov.timetable.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.nsu.shatalov.timetable.dto.StudentGroupDTO;
 import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
 import ru.nsu.shatalov.timetable.service.impl.GroupServiceImpl;
@@ -69,5 +63,11 @@ public class GroupController {
       return new ResponseEntity<>(updatedStudentGroup, HttpStatus.CREATED);
     }
     return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<StudentGroupDTO> deleteGroup(@PathVariable Long id) {
+    service.delete(id);
+    return new ResponseEntity<>(null, HttpStatus.GONE);
   }
 }

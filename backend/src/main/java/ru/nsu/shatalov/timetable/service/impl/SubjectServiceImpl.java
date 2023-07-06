@@ -53,5 +53,10 @@ public class SubjectServiceImpl implements SubjectService {
   }
 
   @Override
-  public void delete(Long id) {}
+  public void delete(Long id) {
+    Subject subject = repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+    if (subject != null) {
+      repository.delete(subject);
+    }
+  }
 }
