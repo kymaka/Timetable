@@ -9,6 +9,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
 
 @Entity
@@ -20,9 +23,12 @@ public class StudentGroup {
 
   private String number;
 
-  @OneToMany private List<TimetableEntry> timetableEntries;
+  @Cascade(CascadeType.REMOVE)
+  @OneToMany
+  private List<TimetableEntry> timetableEntries;
 
   @ManyToMany(fetch = FetchType.LAZY)
+  @Cascade(CascadeType.REMOVE)
   private List<Subject> subjects;
 
   public StudentGroup(String number, List<Subject> subjects) {

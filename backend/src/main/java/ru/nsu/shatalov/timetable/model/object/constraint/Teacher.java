@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import ru.nsu.shatalov.timetable.model.enums.Day;
 
 import java.util.List;
@@ -21,7 +23,9 @@ public class Teacher {
 
   private String name;
 
-  @ManyToMany private List<Subject> subjects;
+  @Cascade(CascadeType.PERSIST)
+  @ManyToMany
+  private List<Subject> subjects;
 
   @Enumerated(EnumType.ORDINAL)
   private List<Day> workingDays;
