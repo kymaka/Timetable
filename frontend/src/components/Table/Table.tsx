@@ -1,5 +1,5 @@
 import axios from "axios"
-import { deleteDataForRoute, getDataForRoute } from "../../utils/RouteParser"
+import { addDataForRoute, deleteDataForRoute, getDataForRoute } from "../../utils/RouteParser"
 import { useState, useEffect } from "react"
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -27,10 +27,15 @@ let thisObject: Room | Subject | StudentGroup | Teacher | TimeSlot | TimetableEn
 export function SuperTable({ type }: any) {
   const { number } = useParams();
   const { data, loading, error, refetch } = useFetch(type, number)
-  const [rowsData, setRowsData] = React.useState(data);
 
-  const handleAdd = (type: string) => {
+  const handleAdd = (
+    type: string,
+    thisThingy: Room | Subject | StudentGroup | Teacher | TimeSlot) => {
     console.log(data, "data");
+    addDataForRoute(type, thisThingy)
+      .then(() => {
+        refetch();
+      });
   };
   if (data != null) {
     if (data[0] != null) {
@@ -137,7 +142,7 @@ export function SuperTable({ type }: any) {
                     </TableRow>
                   )}
                   <Button className="add">
-                    <BasicModal />
+                    <BasicModal type={type} />
                   </Button>
                 </TableBody>
               </Table>
@@ -152,9 +157,8 @@ export function SuperTable({ type }: any) {
     return (
       <>
         No Data
-        <Button className="add" onClick={() => handleAdd(type)}>
-          Add
-          <BasicModal />
+        <Button className="add" >
+          <BasicModal type={type} handleAdd={handleAdd} />
         </Button>
       </>);
   }
@@ -168,9 +172,6 @@ function useFetch(type: string, number?: string | undefined) {
   const [fetchTrigger, setFetchTrigger] = useState(0)
   const [loading, setLoading] = useState<boolean | null | string>(null);
   const [error, setError] = useState<null | string>(null);
-  // Нужна какая-то возможность обновить данные. Создадим функцию рефетч. Она будет просто 
-  // изменять триггер, который мы добавим в зависимости useEffect и тем самым при его изменении
-  // юзэффект сработает ещё раз. костыль какой-то, но нет времени придумывать лучше. Вроде должно работать.
   const refetch = () => {
     setFetchTrigger(fetchTrigger + 1)
   }
