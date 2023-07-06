@@ -30,6 +30,7 @@ import TimeSlot, { isTimeSlot } from "../../types/TimeSlot";
 import { Day } from "../../enums/Day";
 import { useParams } from "react-router-dom";
 import TimetableEntry, { isTimetableEntry } from "../../types/TimetableEntry";
+import { Button } from "@mui/material";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -240,7 +241,9 @@ export function SuperTable({ type }: any) {
                         </TableCell>
                       );
                     })}
-
+                    <Button className="delete">
+                      Delete
+                    </Button>
                   </TableRow>
                 ))}
                 {(
@@ -252,6 +255,9 @@ export function SuperTable({ type }: any) {
                     <TableCell colSpan={6} />
                   </TableRow>
                 )}
+                <Button className="add">
+                  Add
+                </Button>
               </TableBody>
             </Table>
           </TableContainer>
