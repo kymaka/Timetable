@@ -7,10 +7,17 @@ import { RoomType, RoomTypeInfo } from '../../enums/RoomType';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@material-ui/core';
 
-const RoomComponent = () => {
+const RoomComponent = ({ updateData }: any) => {
+  const room: Room = {
+    id: 0,
+    number: '',
+    type: RoomType.General
+  };
   return (
     <Box>
-      <Input placeholder="Room number" />
+      <Input placeholder="Room number" onInput=
+        {e => room.number = ((e.target as HTMLInputElement).value)}
+      />
       <TextField
         id="outlined-select-type"
         select
@@ -18,11 +25,17 @@ const RoomComponent = () => {
         helperText="Select room type."
       >
         {Object.keys(RoomType).map((option) => (
-          <MenuItem key={option} value={option}>
+          <MenuItem
+            onInput={e => room.type = ((e.target as HTMLInputElement).value as RoomType)}
+            key={option}
+            value={option}>
             {option}
           </MenuItem>
         ))}
       </TextField>
+      <Button onClick={() => updateData(room)}>
+        Save
+      </Button>
     </Box>
   );
 };

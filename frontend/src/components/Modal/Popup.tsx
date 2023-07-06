@@ -4,6 +4,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import RoomComponent from '../TypeComponents/RoomComponent';
+import TimeSlot from '../../types/TimeSlot';
+import Subject from '../../types/Subject';
+import StudentGroup from '../../types/StudentGroup';
+import Room from '../../types/Room';
+import Teacher from '../../types/Teacher';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,6 +23,7 @@ const style = {
 };
 
 export default function BasicModal({ type }: any, { handleAdd }: any) {
+  const [data, setData] = React.useState<Teacher | TimeSlot | Subject | StudentGroup | Room | null>(null);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,21 +41,18 @@ export default function BasicModal({ type }: any, { handleAdd }: any) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add {type}
           </Typography>
-          <TypeParser type={type} handleAdd={handleAdd} />
-          <Button onClick={() => handleAdd(type,)}>
-            Save
-          </Button>
+          <TypeParser type={type} setData={setData} />
         </Box>
       </Modal>
     </div>
   );
 }
 
-function TypeParser({ type }: any) {
+function TypeParser({ type }: any, { setData }: any) {
   if (type === 'room') {
     return (
       <div>
-        <RoomComponent />
+        <RoomComponent setData={() => setData} />
       </div>
     )
   }
