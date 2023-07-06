@@ -85,187 +85,191 @@ export function SuperTable({ type }: any) {
 
 
   if (data != null) {
-    thisObject = data[0]
+    if (data[0] != null) {
+      thisObject = data[0]
 
-    // Keys are the names of the columns.
-    const keys = Object.keys(thisObject)
+      // Keys are the names of the columns.
+      const keys = Object.keys(thisObject)
 
-    const handleRequestSort = (
-      event: React.MouseEvent<unknown>,
-      property: keyof typeof thisObject
-    ) => {
-      const isAsc = order === "asc";
-    };
+      const handleRequestSort = (
+        event: React.MouseEvent<unknown>,
+        property: keyof typeof thisObject
+      ) => {
+        const isAsc = order === "asc";
+      };
 
-    const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-      const selectedIndex = selected.indexOf(name);
-      let newSelected: readonly string[] = [];
+      const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+        const selectedIndex = selected.indexOf(name);
+        let newSelected: readonly string[] = [];
 
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, name);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1)
-        );
-      }
-
-      setSelected(newSelected);
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-      setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (
-      event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      setPage(0);
-    };
-
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-
-    /*const visibleRows = React.useMemo(
-      () =>
-        stableSort(data, getComparator(order, orderBy)).slice(
-          page * rowsPerPage,
-          page * rowsPerPage + rowsPerPage
-        ),
-      [order, orderBy, page, rowsPerPage, rowsData]
-    );*/
-
-    const handleDelete = (el: typeof thisObject) => {
-      setRowsData((oldRows) => {
-        if (oldRows) {
-          return oldRows.filter((row) => row.id !== el.id);
+        if (selectedIndex === -1) {
+          newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+          newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+          newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+          newSelected = newSelected.concat(
+            selected.slice(0, selectedIndex),
+            selected.slice(selectedIndex + 1)
+          );
         }
-        return [];
-      });
-    };
 
-    const handleAdd = (data: typeof thisObject) => {
-      console.log(data, "data");
+        setSelected(newSelected);
+      };
 
-      setRowsData((oldRows) => {
-        if (oldRows) {
-          const newRows = [...oldRows];
-          newRows.push(data);
-          return newRows;
-        }
-        return [data];
-      });
-    };
+      const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+      };
+
+      const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+      };
+
+      const isSelected = (name: string) => selected.indexOf(name) !== -1;
+
+      // Avoid a layout jump when reaching the last page with empty rows.
+      const emptyRows =
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+
+      /*const visibleRows = React.useMemo(
+        () =>
+          stableSort(data, getComparator(order, orderBy)).slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage
+          ),
+        [order, orderBy, page, rowsPerPage, rowsData]
+      );*/
+
+      const handleDelete = (el: typeof thisObject) => {
+        setRowsData((oldRows) => {
+          if (oldRows) {
+            return oldRows.filter((row) => row.id !== el.id);
+          }
+          return [];
+        });
+      };
+
+      const handleAdd = (data: typeof thisObject) => {
+        console.log(data, "data");
+
+        setRowsData((oldRows) => {
+          if (oldRows) {
+            const newRows = [...oldRows];
+            newRows.push(data);
+            return newRows;
+          }
+          return [data];
+        });
+      };
 
 
-    return (
-      <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={"medium"}
-            >
-              <TableHead>
-                <TableRow>
-                  {keys.map((key) => (
-                    <TableCell
-                      key={key}
-                      align={"left"}
-                      padding={"normal"}
-                      sortDirection={order}
+      return (
+        <Box sx={{ width: "100%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={"medium"}
+              >
+                <TableHead>
+                  <TableRow>
+                    {keys.map((key) => (
+                      <TableCell
+                        key={key}
+                        align={"left"}
+                        padding={"normal"}
+                        sortDirection={order}
+                      >
+                        {key}
+                      </TableCell>
+                    ))}
+                    <TableCell align={"right"}></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row, index) => (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row}
+                      sx={{ cursor: "pointer" }}
                     >
-                      {key}
-                    </TableCell>
-                  ))}
-                  <TableCell align={"right"}></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data.map((row, index) => (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    {keys.map((key) => {
-                      let cellContent;
-                      if (isTimetableEntry(thisObject)) {
-                        if (isSubject((row[key])) || (isTeacher(row[key]))) {
-                          cellContent = (`|${row[key].name}|`) + ('');
-                        } else if (isRoom(row[key])) {
-                          cellContent = (`|${row[key].number}|`) + ('');
-                        } else if (isTimeSlot(row[key])) {
-                          cellContent = (`|${row[key].time}|`) + ('');
+                      {keys.map((key) => {
+                        let cellContent;
+                        if (isTimetableEntry(thisObject)) {
+                          if (isSubject((row[key])) || (isTeacher(row[key]))) {
+                            cellContent = (`|${row[key].name}|`) + ('');
+                          } else if (isRoom(row[key])) {
+                            cellContent = (`|${row[key].number}|`) + ('');
+                          } else if (isTimeSlot(row[key])) {
+                            cellContent = (`|${row[key].time}|`) + ('');
+                          } else {
+                            cellContent = (`|${row[key]}|`) + ' ';
+                          }
+                        } else if (Array.isArray(row[key])) {
+                          // Array of Subjects or Teachers
+                          if (isSubject((row[key][0])) || (isTeacher(row[key][0]))) {
+                            cellContent = row[key].map((val: Subject | Teacher) => `|${val.name}|`).join('');
+                          } else if (isTimetableEntry(row[key][0])) {
+                            cellContent = row[key].map((val: TimetableEntry) => `|${val.day
+                              + ' '
+                              + val.room.number
+                              + ' '
+                              + val.subject.name
+                              + ' '
+                              + val.teacher.name
+                              + ' '
+                              + val.timeSlot.time
+                              }|`).join('');
+                          } else if ((row[key][0] as Day)) {
+                            // Array of Days
+                            cellContent = row[key].map((val: Day) => `|${val}|`).join('');
+                          }
                         } else {
-                          cellContent = (`|${row[key]}|`) + ' ';
+                          // Regular value
+                          cellContent = row[key];
                         }
-                      } else if (Array.isArray(row[key])) {
-                        // Array of Subjects or Teachers
-                        if (isSubject((row[key][0])) || (isTeacher(row[key][0]))) {
-                          cellContent = row[key].map((val: Subject | Teacher) => `|${val.name}|`).join('');
-                        } else if (isTimetableEntry(row[key][0])) {
-                          cellContent = row[key].map((val: TimetableEntry) => `|${val.day
-                            + ' '
-                            + val.room.number
-                            + ' '
-                            + val.subject.name
-                            + ' '
-                            + val.teacher.name
-                            + ' '
-                            + val.timeSlot.time
-                            }|`).join('');
-                        } else if ((row[key][0] as Day)) {
-                          // Array of Days
-                          cellContent = row[key].map((val: Day) => `|${val}|`).join('');
-                        }
-                      } else {
-                        // Regular value
-                        cellContent = row[key];
-                      }
 
-                      return (
-                        <TableCell key={row[key].id} align="left">
-                          {cellContent}
-                        </TableCell>
-                      );
-                    })}
-                    <Button className="delete">
-                      Delete
-                    </Button>
-                  </TableRow>
-                ))}
-                {(
-                  <TableRow
-                    style={{
-                      height: 53 * 5
-                    }}
-                  >
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-                <Button className="add">
-                  Add
-                </Button>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Box>
-    )
+                        return (
+                          <TableCell key={row[key].id} align="left">
+                            {cellContent}
+                          </TableCell>
+                        );
+                      })}
+                      <Button className="delete">
+                        Delete
+                      </Button>
+                    </TableRow>
+                  ))}
+                  {(
+                    <TableRow
+                      style={{
+                        height: 53 * 5
+                      }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                  <Button className="add">
+                    Add
+                  </Button>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Box>
+      )
+    } else {
+      return <></>;
+    }
   } else {
-    return null;
+    return <></>;
   }
 }
 
