@@ -6,7 +6,7 @@ const getAll = () => {
 };
 
 const get = (id: number) => {
-  return http.get<Teacher>('/teachers/${id}');
+  return http.get<Teacher>(`/teachers/${id}`);
 };
 
 const create = (data: Teacher) => {
@@ -14,11 +14,11 @@ const create = (data: Teacher) => {
 };
 
 const update = (data: Teacher, id: number) => {
-  return http.put<any>('/teachers/${id}', data);
+  return http.put<any>(`/teachers/${id}`, data);
 };
 
 const remove = (id: number) => {
-  return http.delete<any>('/teachers/${id}');
+  return http.delete<any>(`/teachers/${id}`);
 };
 
 const TeacherService = {

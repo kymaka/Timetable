@@ -6,7 +6,7 @@ const getAll = () => {
 };
 
 const get = (id: number) => {
-  return http.get<TimeSlot>('/timeslots/${id}');
+  return http.get<TimeSlot>(`/timeslots/${id}`);
 };
 
 const create = (data: TimeSlot) => {
@@ -14,11 +14,11 @@ const create = (data: TimeSlot) => {
 };
 
 const update = (data: TimeSlot, id: number) => {
-  return http.put<any>('/timeslots/${id}', data);
+  return http.put<any>(`/timeslots/${id}`, data);
 };
 
 const remove = (id: number) => {
-  return http.delete<any>('/timeslots/${id}');
+  return http.delete<any>(`/timeslots/${id}`);
 };
 
 const TimeSlotService = {

@@ -1,10 +1,5 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css"
-import StudentGroupComponent from './components/TypeComponents/StudentGroupComponent';
-import RoomComponent from './components/TypeComponents/RoomComponent';
-import { RoomType } from './enums/RoomType';
 import DataPage from './pages/DataPage';
 import { Route, Routes } from 'react-router-dom';
 import { TimetablePage } from './pages/TimetablePage';

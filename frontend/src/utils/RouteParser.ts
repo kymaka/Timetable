@@ -20,3 +20,17 @@ export function getDataForRoute(type: string, number?: string | undefined) {
     return TeacherService.getAll();
   }
 }
+
+export function deleteDataForRoute(type: string, id: number) {
+  if (type === 'room') {
+    return RoomService.remove(id);
+  } else if (type === 'timeslot') {
+    return TimeSlotService.remove(id);
+  } else if (type === 'subject') {
+    return SubjectService.remove(id);
+  } else if (type === 'group') {
+    return StudentGroupService.remove(id);
+  } else {
+    return TeacherService.remove(id);
+  }
+}

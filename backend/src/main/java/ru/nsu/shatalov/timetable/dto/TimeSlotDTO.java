@@ -1,14 +1,12 @@
 package ru.nsu.shatalov.timetable.dto;
 
-import ru.nsu.shatalov.timetable.model.object.constraint.TimeSlot;
-
 public class TimeSlotDTO {
 
   private Long id;
 
-  private int time;
+  private String time;
 
-  public TimeSlotDTO(int time) {
+  public TimeSlotDTO(String time) {
     this.time = time;
   }
 
@@ -23,20 +21,15 @@ public class TimeSlotDTO {
       return false;
     }
     TimeSlotDTO other = (TimeSlotDTO) obj;
-    return time == other.time;
+    return time.equals(other.time);
   }
 
-  public int getTime() {
+  public String getTime() {
     return this.time;
   }
 
-  public void setTime(int newTime) {
+  public void setTime(String newTime) {
     this.time = newTime;
-  }
-
-  @Override
-  public String toString() {
-    return this.time / 100 + ":" + this.time % 100;
   }
 
   public Long getId() {

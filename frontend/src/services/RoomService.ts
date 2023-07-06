@@ -6,7 +6,7 @@ const getAll = () => {
 };
 
 const get = (id: number) => {
-  return http.get<Room>('/rooms/${id}');
+  return http.get<Room>(`/rooms/${id}`);
 };
 
 const create = (data: Room) => {
@@ -14,11 +14,11 @@ const create = (data: Room) => {
 };
 
 const update = (data: Room, id: number) => {
-  return http.put<any>('/rooms/${id}', data);
+  return http.put<any>(`/rooms/${id}`, data);
 };
 
 const remove = (id: number) => {
-  return http.delete<any>('/rooms/${id}');
+  return http.delete<any>(`/rooms/${id}`);
 };
 
 const RoomService = {

@@ -1,26 +1,14 @@
 import axios from "axios"
-import { getDataForRoute } from "../../utils/RouteParser"
+import { deleteDataForRoute, getDataForRoute } from "../../utils/RouteParser"
 import { useState, useEffect } from "react"
-import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import React from "react";
 import Room, { isRoom } from "../../types/Room";
 import Subject, { isSubject } from "../../types/Subject";
@@ -31,59 +19,19 @@ import { Day } from "../../enums/Day";
 import { useParams } from "react-router-dom";
 import TimetableEntry, { isTimetableEntry } from "../../types/TimetableEntry";
 import { Button } from "@mui/material";
+import BasicModal from "../Modal/Popup";
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
 
-type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(
-  array: readonly T[],
-  comparator: (a: T, b: T) => number
-) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-let thisObject: Room | Subject | StudentGroup | Teacher | TimeSlot;
-const order: Order = "asc";
+let thisObject: Room | Subject | StudentGroup | Teacher | TimeSlot | TimetableEntry;
 
 export function SuperTable({ type }: any) {
   const { number } = useParams();
-  const { data, loading, error } = useFetch(type, number)
+  const { data, loading, error, refetch } = useFetch(type, number)
   const [rowsData, setRowsData] = React.useState(data);
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof typeof thisObject | string>("id");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-
+  const handleAdd = (type: string) => {
+    console.log(data, "data");
+  };
   if (data != null) {
     if (data[0] != null) {
       thisObject = data[0]
@@ -91,80 +39,12 @@ export function SuperTable({ type }: any) {
       // Keys are the names of the columns.
       const keys = Object.keys(thisObject)
 
-      const handleRequestSort = (
-        event: React.MouseEvent<unknown>,
-        property: keyof typeof thisObject
-      ) => {
-        const isAsc = order === "asc";
-      };
-
-      const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected: readonly string[] = [];
-
-        if (selectedIndex === -1) {
-          newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-          newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-          newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-          newSelected = newSelected.concat(
-            selected.slice(0, selectedIndex),
-            selected.slice(selectedIndex + 1)
-          );
-        }
-
-        setSelected(newSelected);
-      };
-
-      const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-      };
-
-      const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement>
-      ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-      };
-
-      const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-      // Avoid a layout jump when reaching the last page with empty rows.
-      const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-
-      /*const visibleRows = React.useMemo(
-        () =>
-          stableSort(data, getComparator(order, orderBy)).slice(
-            page * rowsPerPage,
-            page * rowsPerPage + rowsPerPage
-          ),
-        [order, orderBy, page, rowsPerPage, rowsData]
-      );*/
-
-      const handleDelete = (el: typeof thisObject) => {
-        setRowsData((oldRows) => {
-          if (oldRows) {
-            return oldRows.filter((row) => row.id !== el.id);
-          }
-          return [];
+      const handleDelete = (
+        type: string, thisThingy: Room | Subject | StudentGroup | Teacher | TimeSlot | TimetableEntry) => {
+        deleteDataForRoute(type, thisThingy.id).then(() => {
+          refetch();
         });
-      };
-
-      const handleAdd = (data: typeof thisObject) => {
-        console.log(data, "data");
-
-        setRowsData((oldRows) => {
-          if (oldRows) {
-            const newRows = [...oldRows];
-            newRows.push(data);
-            return newRows;
-          }
-          return [data];
-        });
-      };
+      }
 
 
       return (
@@ -183,7 +63,6 @@ export function SuperTable({ type }: any) {
                         key={key}
                         align={"left"}
                         padding={"normal"}
-                        sortDirection={order}
                       >
                         {key}
                       </TableCell>
@@ -242,7 +121,8 @@ export function SuperTable({ type }: any) {
                           </TableCell>
                         );
                       })}
-                      <Button className="delete">
+
+                      <Button className="delete" onClick={() => handleDelete(type, row)}>
                         Delete
                       </Button>
                     </TableRow>
@@ -257,7 +137,7 @@ export function SuperTable({ type }: any) {
                     </TableRow>
                   )}
                   <Button className="add">
-                    Add
+                    <BasicModal />
                   </Button>
                 </TableBody>
               </Table>
@@ -266,10 +146,17 @@ export function SuperTable({ type }: any) {
         </Box>
       )
     } else {
-      return <></>;
+      return <>No timetable for this group yet</>;
     }
   } else {
-    return <></>;
+    return (
+      <>
+        No Data
+        <Button className="add" onClick={() => handleAdd(type)}>
+          Add
+          <BasicModal />
+        </Button>
+      </>);
   }
 }
 
@@ -278,8 +165,16 @@ export function SuperTable({ type }: any) {
 
 function useFetch(type: string, number?: string | undefined) {
   const [data, setData] = useState<null | any[]>(null);
+  const [fetchTrigger, setFetchTrigger] = useState(0)
   const [loading, setLoading] = useState<boolean | null | string>(null);
   const [error, setError] = useState<null | string>(null);
+  // Нужна какая-то возможность обновить данные. Создадим функцию рефетч. Она будет просто 
+  // изменять триггер, который мы добавим в зависимости useEffect и тем самым при его изменении
+  // юзэффект сработает ещё раз. костыль какой-то, но нет времени придумывать лучше. Вроде должно работать.
+  const refetch = () => {
+    setFetchTrigger(fetchTrigger + 1)
+  }
+
 
   useEffect(() => {
     setLoading('loading...')
@@ -300,39 +195,9 @@ function useFetch(type: string, number?: string | undefined) {
     return () => {
       source.cancel();
     }
-  }, [type])
+  }, [type, fetchTrigger])
 
-  return { data, loading, error }
+  return { data, loading, error, refetch }
 }
 
 export default useFetch;
-
-
-
-
-/*    return (
-      <table>
-        <thead>
-          <tr>
- 
- 
- 
-            {keys.map((key) => (
-              <th key={key}>{key}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((el) => (
-            <tr key={el}>
-              {keys.map((key) => (
-                <td key={el[key].id}>{el[key]}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )
-  } else {
-    return null;
-  }*/

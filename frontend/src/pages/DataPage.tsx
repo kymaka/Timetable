@@ -13,13 +13,6 @@ function HeaderView() {
 }
 
 function DataPage() {
-  //  const [rooms, setRooms] = useState<Room[]>([]);
-
-  //  useEffect(() => {
-  //    RoomService.getAll().then((data) => {
-  //      setRooms(data.data);
-  //    })
-  //  })
   const path = HeaderView();
   if (path === '/rooms') {
     return (
@@ -28,7 +21,7 @@ function DataPage() {
         <SuperTable type={'room'} />
       </>
     );
-  } else if(path === '/groups') {
+  } else if (path === '/groups') {
     return (
       <>
         <h1>Groups</h1>

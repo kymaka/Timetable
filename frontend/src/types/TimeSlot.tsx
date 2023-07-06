@@ -1,6 +1,6 @@
 interface TimeSlot {
   id: number;
-  time: number;
+  time: string;
 }
 
 export function isTimeSlot(obj: any): obj is TimeSlot {

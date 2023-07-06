@@ -6,7 +6,7 @@ const getAll = () => {
 };
 
 const get = (id: number) => {
-  return http.get<Subject>('/subjects/${id}');
+  return http.get<Subject>(`/subjects/${id}`);
 };
 
 const create = (data: Subject) => {
@@ -14,11 +14,11 @@ const create = (data: Subject) => {
 };
 
 const update = (data: Subject, id: number) => {
-  return http.put<any>('/subjects/${id}', data);
+  return http.put<any>(`/subjects/${id}`, data);
 };
 
 const remove = (id: number) => {
-  return http.delete<any>('/subjects/${id}');
+  return http.delete<any>(`/subjects/${id}`);
 };
 
 const SubjectService = {
