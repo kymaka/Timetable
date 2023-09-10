@@ -1,6 +1,10 @@
 package ru.nsu.shatalov.timetable.dto;
 
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
+import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomDTO {
 
@@ -9,6 +13,8 @@ public class RoomDTO {
   private String number;
 
   private RoomType type;
+
+  private List<TimetableEntryDTO> entries;
 
   public RoomDTO(String number, RoomType type) {
     this.number = number;
@@ -39,5 +45,13 @@ public class RoomDTO {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public List<TimetableEntryDTO> getEntries() {
+    return this.entries;
+  }
+
+  public void setEntries(List<TimetableEntryDTO> timetableEntry) {
+    this.entries = timetableEntry;
   }
 }

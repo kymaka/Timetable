@@ -2,9 +2,13 @@ package ru.nsu.shatalov.timetable.service.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import ru.nsu.shatalov.timetable.dto.RoomDTO;
+import ru.nsu.shatalov.timetable.dto.TimetableEntryDTO;
+import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
 import ru.nsu.shatalov.timetable.model.object.constraint.Room;
 import ru.nsu.shatalov.timetable.repository.RoomRepository;
 import ru.nsu.shatalov.timetable.service.interfaces.RoomService;
@@ -37,8 +41,18 @@ public class RoomServiceImpl implements RoomService {
   }
 
   @Override
-  public RoomDTO update(RoomDTO room, Long id) {
-    return null;
+  public RoomDTO update(RoomDTO roomDTO, Long id) {
+    Room room = repository.findById(roomDTO.getId()).isPresent()
+        ? repository.findById(roomDTO.getId()).get()
+        : null;
+    room.setNumber(roomDTO.getNumber());
+    room.setType(roomDTO.getType());
+    List<TimetableEntry> timetableEntries = roomDTO.getEntries()
+            .stream()
+                .map(entry -> modelMapper.map(entry, TimetableEntry.class))
+                    .toList();
+    room.setEntry(timetableEntries);
+    return modelMapper.map(room, RoomDTO.class);
   }
 
   @Override

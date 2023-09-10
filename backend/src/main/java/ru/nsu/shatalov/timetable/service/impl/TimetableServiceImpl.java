@@ -1,5 +1,6 @@
 package ru.nsu.shatalov.timetable.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -65,6 +66,7 @@ public class TimetableServiceImpl implements TimetableService {
           }
         }
         List<TimetableEntryDTO> groupTimetable = new LinkedList<>();
+        RoomDTO room = null;
         for (int d = 0; d < days.length; d++) {
           for (int i = 0; i < numberOfCourses; i++) {
             if (group.getSubjects().size() > i && timetable[g][i][3] == d) {
@@ -76,11 +78,19 @@ public class TimetableServiceImpl implements TimetableService {
                       teachers.get(timetable[g][i][2]),
                       days[timetable[g][i][3]]);
               groupTimetable.add(timetableEntryService.save(timetableEntry));
+              List<TimetableEntryDTO> timetableEntryDTOList = new ArrayList<>();
+              timetableEntryDTOList.add(timetableEntry);
+              room = rooms.get(timetable[g][i][0]);
+              room.setEntries(timetableEntryDTOList);
             }
           }
         }
         group.setTimetableEntries(groupTimetable);
+
+        roomService.update(room, room.getId());
+
         groupService.update(group, group.getId());
+
       }
       return true;
     }

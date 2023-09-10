@@ -1,12 +1,13 @@
 package ru.nsu.shatalov.timetable.model.object.constraint;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import ru.nsu.shatalov.timetable.model.enums.RoomType;
+import ru.nsu.shatalov.timetable.model.object.TimetableEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Room {
@@ -19,6 +20,10 @@ public class Room {
 
   @Enumerated(EnumType.ORDINAL)
   private RoomType type;
+
+  @Cascade(CascadeType.PERSIST)
+  @OneToMany
+  private List<TimetableEntry> entries;
 
   public Room(String number, RoomType type) {
     this.number = number;
@@ -49,5 +54,13 @@ public class Room {
 
   public void setId(long id) {
     this.id = id;
+  }
+
+  public List<TimetableEntry> getEntries() {
+    return this.entries;
+  }
+
+  public void setEntry(List<TimetableEntry> timetableEntry) {
+    this.entries = timetableEntry;
   }
 }
